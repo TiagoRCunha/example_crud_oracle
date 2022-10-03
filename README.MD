@@ -1,6 +1,19 @@
-# Exemplo de Sistema em Python fazendo CRUD no Oracle
+# Sobre este projeto
 
-Esse sistema de exemplo é composto por um conjunto de tabelas que representam pedidos de vendas, contendo tabelas como: clientes, fornecedores, produtos, pedidos e itens de pedido.
+Este projeto é um __fork__ [deste repositório](https://github.com/howardroatti/example_crud_oracle), para fins de obtenção de nota na disciplina de banco de dados ministrada pelo professor Howard Roatti.
+
+Os integrantes são:
+- [Henrique Klayton](https://github.com/henrique-klayton)
+- [Pedro Nogueira F](https://github.com/PedroNogueiraF)
+- [Tiago R Cunha](https://github.com/TiagoRCunha)
+- [Victor Binda S](https://github.com/Victorbnd)
+
+
+# Album digital
+
+Esse sistema é sobre completar um album digital, adicionando cartas únicas com o intúito de trabalhar com os conteúdos aprendidos em aula. O usuário pode comprar figurinhas, para completar o album, e cada figurinha tem propriedades diferentes.
+
+--- 
 
 O sistema exige que as tabelas existam, então basta executar o script Python a seguir para criação das tabelas e preenchimento de dados de exemplos:
 ```shell
