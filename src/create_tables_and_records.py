@@ -29,7 +29,7 @@ def generate_records(query:str, sep:str=';'):
 
 def run():
 
-    with open("../sql/create_tables_pedidos.sql") as f:
+    """ with open("../sql/create_tables_pedidos.sql") as f:
         query_create = f.read()
 
     print("Creating tables...")
@@ -48,7 +48,7 @@ def run():
 
     print("Gerenating records")
     generate_records(query=query_generate_related_records, sep='--')
-    print("Records successfully generated!")
+    print("Records successfully generated!") """
 
 if __name__ == '__main__':
     run()
