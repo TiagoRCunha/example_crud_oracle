@@ -11,7 +11,7 @@ Os integrantes são:
 
 # Album digital
 
-Esse sistema é sobre completar um album digital, adicionando cartas únicas com o intúito de trabalhar com os conteúdos aprendidos em aula. O usuário pode comprar figurinhas, para completar o album, e cada figurinha tem propriedades diferentes.
+Esse sistema é sobre completar um album digital, adicionando cartas únicas com o intuito de trabalhar com os conteúdos aprendidos em aula. O usuário pode comprar figurinhas, para completar o album, e cada figurinha tem propriedades diferentes.
 
 --- 
 
