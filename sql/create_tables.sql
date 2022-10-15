@@ -49,7 +49,7 @@ DROP SEQUENCE labdatabase.tag_id_seq;
 
 CREATE TABLE labdatabase."album" (
     id NUMBER NOT NULL,
-    title VARCHAR2(25) NOT NULL,
+    title VARCHAR2(40) NOT NULL,
     card_count  NUMBER NOT NULL,
     page_number NUMBER NOT NULL,
     "description" VARCHAR2(255),
@@ -72,7 +72,7 @@ CREATE TABLE labdatabase."card" (
     id NUMBER NOT NULL,
     "number" NUMBER NOT NULL,
     "image"  VARCHAR2(155) NOT NULL,
-    "name" VARCHAR2(20) NOT NULL,
+    "name" VARCHAR2(40) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT card_pk PRIMARY KEY ( id )
@@ -81,7 +81,7 @@ CREATE TABLE labdatabase."card" (
 CREATE TABLE labdatabase."border" (
     id NUMBER NOT NULL,
     "image"  VARCHAR2(155),
-    "name" VARCHAR2(20),
+    "name" VARCHAR2(40),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT border_pk PRIMARY KEY ( id )
@@ -90,7 +90,7 @@ CREATE TABLE labdatabase."border" (
 CREATE TABLE labdatabase."background" (
     id NUMBER NOT NULL,
     "image"  VARCHAR2(155),
-    "name" VARCHAR2(20),
+    "name" VARCHAR2(40),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT background_pk PRIMARY KEY ( id )
@@ -98,7 +98,7 @@ CREATE TABLE labdatabase."background" (
 
 CREATE TABLE labdatabase."tag" (
     id NUMBER NOT NULL,
-    "name" VARCHAR2(15) NOT NULL,
+    "name" VARCHAR2(40) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT tag_pk PRIMARY KEY ( id )
@@ -106,7 +106,7 @@ CREATE TABLE labdatabase."tag" (
 
 CREATE TABLE labdatabase."rarity" (
     id NUMBER NOT NULL,
-    "name" VARCHAR2(15) NOT NULL,
+    "name" VARCHAR2(40) NOT NULL,
     "tier" NUMBER NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
