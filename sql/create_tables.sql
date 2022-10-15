@@ -4,10 +4,9 @@ ALTER TABLE labdatabase."card" DROP CONSTRAINT card_rarity_id_fk;
 ALTER TABLE labdatabase."card" DROP CONSTRAINT card_background_id_fk;
 ALTER TABLE labdatabase."card" DROP CONSTRAINT card_border_id_fk;
 ALTER TABLE labdatabase."card" DROP CONSTRAINT card_album_id_fk;
+ALTER TABLE labdatabase."card" DROP CONSTRAINT card_user_id_fk;
 ALTER TABLE labdatabase."user" DROP CONSTRAINT user_album_id_fk;
 
-ALTER TABLE labdatabase."user_card" DROP CONSTRAINT user_card_card_id_fk;
-ALTER TABLE labdatabase."user_card" DROP CONSTRAINT user_card_user_id_fk;
 ALTER TABLE labdatabase."card_tag" DROP CONSTRAINT card_tag_card_id_fk;
 ALTER TABLE labdatabase."card_tag" DROP CONSTRAINT card_tag_tag_id_fk;
 ALTER TABLE labdatabase."border_tag" DROP CONSTRAINT border_tag_border_id_fk;
@@ -15,7 +14,6 @@ ALTER TABLE labdatabase."border_tag" DROP CONSTRAINT border_tag_tag_id_fk;
 ALTER TABLE labdatabase."background_tag" DROP CONSTRAINT background_tag_tag_id_fk;
 ALTER TABLE labdatabase."background_tag" DROP CONSTRAINT background_tag_background_id_fk;
 
-ALTER TABLE labdatabase."user_card" DROP CONSTRAINT card_user_pk;
 ALTER TABLE labdatabase."card_tag" DROP CONSTRAINT card_tag_pk;
 ALTER TABLE labdatabase."border_tag" DROP CONSTRAINT border_tag_pk;
 ALTER TABLE labdatabase."background_tag" DROP CONSTRAINT background_tag_pk;
@@ -149,18 +147,6 @@ CREATE TABLE labdatabase."background_tag" (
     REFERENCES labdatabase."tag" (id) NOT DEFERRABLE
 );
 
-CREATE TABLE labdatabase."user_card" (
-    card_id NUMBER NOT NULL,
-    user_id NUMBER NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT card_user_pk PRIMARY KEY ( card_id, user_id ),
-    CONSTRAINT user_card_card_id_fk FOREIGN KEY ( card_id )
-    REFERENCES labdatabase."card" (id) NOT DEFERRABLE,
-    CONSTRAINT user_card_user_id_fk FOREIGN KEY ( user_id )
-    REFERENCES labdatabase."user" (id) NOT DEFERRABLE
-);
-
 CREATE SEQUENCE labdatabase.album_id_seq;
 CREATE SEQUENCE labdatabase.user_id_seq;
 CREATE SEQUENCE labdatabase.rarity_id_seq;
@@ -177,7 +163,8 @@ ALTER TABLE labdatabase."card" ADD (
     background_id NUMBER,
     border_id NUMBER,
     rarity_id NUMBER,
-    album_id NUMBER
+    album_id NUMBER,
+    user_id NUMBER
 );
 ALTER TABLE labdatabase."card" ADD CONSTRAINT card_background_id_fk
     FOREIGN KEY ( background_id ) REFERENCES labdatabase."background" (id) NOT DEFERRABLE;
@@ -187,6 +174,8 @@ ALTER TABLE labdatabase."card" ADD CONSTRAINT card_rarity_id_fk
     FOREIGN KEY ( rarity_id ) REFERENCES labdatabase."rarity" (id) NOT DEFERRABLE;
 ALTER TABLE labdatabase."card" ADD CONSTRAINT card_album_id_fk
     FOREIGN KEY ( album_id ) REFERENCES labdatabase."album" (id) NOT DEFERRABLE;
+ALTER TABLE labdatabase."card" ADD CONSTRAINT card_user_id_fk
+    FOREIGN KEY ( user_id ) REFERENCES labdatabase."user" (id) NOT DEFERRABLE;
 
 ALTER TABLE labdatabase."border" ADD rarity_id NUMBER NOT NULL;
 ALTER TABLE labdatabase."border" ADD CONSTRAINT border_rarity_id_fk
