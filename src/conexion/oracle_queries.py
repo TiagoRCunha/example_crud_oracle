@@ -106,11 +106,11 @@ class OracleQueries:
         rows = self.cur.fetchall()
         return json.dumps(rows, default=str)
 
-    def write(self, query:str):
+    def write(self, query:str, parameters:any):
         if not self.can_write:
             raise Exception('Can\'t write using this connection')
 
-        self.cur.execute(query)
+        self.cur.execute(query, parameters)
         self.conn.commit()
 
     def close(self):
