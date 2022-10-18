@@ -1,13 +1,13 @@
 from datetime import date
-from model.clientes import Cliente
-from model.fornecedores import Fornecedor
+from model.card import Card
+from model.album import Album
 
-class Pedido:
+class User:
     def __init__(self, 
                  codigo_pedido:int=None,
                  data_pedido:date=None,
-                 cliente:Cliente= None,
-                 fornecedor:Fornecedor=None
+                 cliente:Card= None,
+                 fornecedor:Album=None
                  ):
         self.set_codigo_pedido(codigo_pedido)
         self.set_data_pedido(data_pedido)
@@ -21,10 +21,10 @@ class Pedido:
     def set_data_pedido(self, data_pedido:date):
         self.data_pedido = data_pedido
 
-    def set_cliente(self, cliente:Cliente):
+    def set_cliente(self, cliente:Card):
         self.cliente = cliente
 
-    def set_fornecedor(self, fornecedor:Fornecedor):
+    def set_fornecedor(self, fornecedor:Album):
         self.fornecedor = fornecedor
 
     def get_codigo_pedido(self) -> int:
@@ -33,11 +33,11 @@ class Pedido:
     def get_data_pedido(self) -> date:
         return self.data_pedido
 
-    def get_cliente(self) -> Cliente:
+    def get_cliente(self) -> Card:
         return self.cliente
 
-    def get_fornecedor(self) -> Fornecedor:
+    def get_fornecedor(self) -> Album:
         return self.fornecedor
 
     def to_string(self) -> str:
-        return f"Pedido: {self.get_codigo_pedido()} | Data: {self.get_data_pedido()} | Cliente: {self.get_cliente().get_nome()} | Fornecedor: {self.get_fornecedor().get_nome_fantasia()}"
+        return f"Pedido: {self.get_codigo_pedido()} | Data: {self.get_data_pedido()} | Cliente: {self.get_cliente().get_name()} | Fornecedor: {self.get_fornecedor().get_nome_fantasia()}"
