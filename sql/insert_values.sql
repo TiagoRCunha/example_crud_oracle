@@ -104,5 +104,21 @@ SELECT id INTO RARITY_ID_SEARCH FROM labdatabase."rarity" WHERE "name" = 'uncomm
 SELECT id INTO ALBUM_ID_SEARCH FROM labdatabase."album" WHERE title = 'Harry Potter';
 INSERT INTO LABDATABASE."card" (id, "number", "image", "name", background_id, border_id, rarity_id, album_id) VALUES(card_id_seq.NEXTVAL, 3, 'rony.png', 'Rony Weasley', BACKGROUND_ID_SEARCH, BORDER_ID_SEARCH, RARITY_ID_SEARCH, ALBUM_ID_SEARCH);
 
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Mid');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Attacker');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Water');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Grass');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Fire');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Poison');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Flying');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Normal');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Electric');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Dragon');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Ice');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Stone');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Wizard');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Elf');
+INSERT INTO LABDATABASE."tag" (id, "name") VALUES (tag_id_seq.NEXTVAL, 'Death Eaters');
+
 COMMIT;
 END;
