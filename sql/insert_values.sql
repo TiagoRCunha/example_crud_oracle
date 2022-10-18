@@ -1,21 +1,21 @@
+BEGIN
 INSERT INTO LABDATABASE."album" (id, title, card_count, page_number, "description") VALUES(album_id_seq.NEXTVAL, 'Copa do Mundo 2022', 150, 15, 'Album copa do mundo 2022');
 INSERT INTO LABDATABASE."album" (id, title, card_count, page_number, "description") VALUES(album_id_seq.NEXTVAL, 'Harry Potter', 15, 3, 'Album Harry Potter 2022');
 INSERT INTO LABDATABASE."album" (id, title, card_count, page_number, "description") VALUES(album_id_seq.NEXTVAL, 'Pokemon', 50, 5, 'Album Pokemon 2022');
-
 
 INSERT INTO LABDATABASE."rarity" (id, "name", "tier") VALUES(rarity_id_seq.NEXTVAL, 'common', '1');
 INSERT INTO LABDATABASE."rarity" (id, "name", "tier") VALUES(rarity_id_seq.NEXTVAL, 'uncommon', '2');
 INSERT INTO LABDATABASE."rarity" (id, "name", "tier") VALUES(rarity_id_seq.NEXTVAL, 'rare', '3');
 INSERT INTO LABDATABASE."rarity" (id, "name", "tier") VALUES(rarity_id_seq.NEXTVAL, 'epic', '4');
 INSERT INTO LABDATABASE."rarity" (id, "name", "tier") VALUES(rarity_id_seq.NEXTVAL, 'legendary', '5');
-
-
+END;
+--
 DECLARE
-    ID_SEARCH NUMBER;
-    BACKGROUND_ID_SEARCH NUMBER;
-    BORDER_ID_SEARCH NUMBER;
-    RARITY_ID_SEARCH NUMBER;
-    ALBUM_ID_SEARCH NUMBER;
+  ID_SEARCH NUMBER;
+  BACKGROUND_ID_SEARCH NUMBER;
+  BORDER_ID_SEARCH NUMBER;
+  RARITY_ID_SEARCH NUMBER;
+  ALBUM_ID_SEARCH NUMBER;
 BEGIN
 
 SELECT id INTO ID_SEARCH FROM labdatabase."album" WHERE title = 'Copa do Mundo 2022';

@@ -4,7 +4,6 @@ Este projeto é um __fork__ [deste repositório](https://github.com/howardroatti
 
 Os integrantes são:
 - [Henrique Klayton](https://github.com/henrique-klayton)
-- [Pedro Nogueira F](https://github.com/PedroNogueiraF)
 - [Tiago R Cunha](https://github.com/TiagoRCunha)
 - [Victor Binda S](https://github.com/Victorbnd)
 

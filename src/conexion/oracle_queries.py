@@ -64,7 +64,7 @@ class OracleQueries:
 
         self.conn = cx_Oracle.connect(user=self.user,
                                       password=self.passwd,
-                                      dsn=self.connectionString()
+                                      dsn=self.connectionString(True)
                                      )
         self.cur = self.conn.cursor()
         return self.cur

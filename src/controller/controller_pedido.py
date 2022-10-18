@@ -1,18 +1,18 @@
 from pydoc import cli
-from model.pedidos import Pedido
-from model.clientes import Cliente
-from controller.controller_cliente import Controller_Cliente
-from model.fornecedores import Fornecedor
+from model.user import User
+from model.card import Card
+from controller.controller_cliente import Controller_Card
+from model.album import Album
 from controller.controller_fornecedor import Controller_Fornecedor
 from conexion.oracle_queries import OracleQueries
 from datetime import date
 
 class Controller_Pedido:
     def __init__(self):
-        self.ctrl_cliente = Controller_Cliente()
+        self.ctrl_cliente = Controller_Card()
         self.ctrl_fornecedor = Controller_Fornecedor()
         
-    def inserir_pedido(self) -> Pedido:
+    def inserir_pedido(self) -> User:
         ''' Ref.: https://cx-oracle.readthedocs.io/en/latest/user_guide/plsql_execution.html#anonymous-pl-sql-blocks'''
         
         # Cria uma nova conexão com o banco
@@ -40,7 +40,7 @@ class Controller_Pedido:
         output_value = cursor.var(int)
 
         # Cria um dicionário para mapear as variáveis de entrada e saída
-        data = dict(codigo=output_value, data_pedido=data_hoje, cpf=cliente.get_CPF(), cnpj=fornecedor.get_CNPJ())
+        data = dict(codigo=output_value, data_pedido=data_hoje, cpf=cliente.get_number(), cnpj=fornecedor.get_CNPJ())
         # Executa o bloco PL/SQL anônimo para inserção do novo produto e recuperação da chave primária criada pela sequence
         cursor.execute("""
         begin
@@ -55,13 +55,13 @@ class Controller_Pedido:
         # Recupera os dados do novo produto criado transformando em um DataFrame
         df_pedido = oracle.sqlToDataFrame(f"select codigo_pedido, data_pedido from pedidos where codigo_pedido = {codigo_pedido}")
         # Cria um novo objeto Produto
-        novo_pedido = Pedido(df_pedido.codigo_pedido.values[0], df_pedido.data_pedido.values[0], cliente, fornecedor)
+        novo_pedido = User(df_pedido.codigo_pedido.values[0], df_pedido.data_pedido.values[0], cliente, fornecedor)
         # Exibe os atributos do novo produto
         print(novo_pedido.to_string())
         # Retorna o objeto novo_pedido para utilização posterior, caso necessário
         return novo_pedido
 
-    def atualizar_pedido(self) -> Pedido:
+    def atualizar_pedido(self) -> User:
         # Cria uma nova conexão com o banco que permite alteração
         oracle = OracleQueries(can_write=True)
         oracle.connect()
@@ -89,11 +89,11 @@ class Controller_Pedido:
             data_hoje = date.today()
 
             # Atualiza a descrição do produto existente
-            oracle.write(f"update pedidos set cpf = '{cliente.get_CPF()}', cnpj = '{fornecedor.get_CNPJ()}', data_pedido = to_date('{data_hoje}','yyyy-mm-dd') where codigo_pedido = {codigo_pedido}")
+            oracle.write(f"update pedidos set cpf = '{cliente.get_number()}', cnpj = '{fornecedor.get_CNPJ()}', data_pedido = to_date('{data_hoje}','yyyy-mm-dd') where codigo_pedido = {codigo_pedido}")
             # Recupera os dados do novo produto criado transformando em um DataFrame
             df_pedido = oracle.sqlToDataFrame(f"select codigo_pedido, data_pedido from pedidos where codigo_pedido = {codigo_pedido}")
             # Cria um novo objeto Produto
-            pedido_atualizado = Pedido(df_pedido.codigo_pedido.values[0], df_pedido.data_pedido.values[0], cliente, fornecedor)
+            pedido_atualizado = User(df_pedido.codigo_pedido.values[0], df_pedido.data_pedido.values[0], cliente, fornecedor)
             # Exibe os atributos do novo produto
             print(pedido_atualizado.to_string())
             # Retorna o objeto pedido_atualizado para utilização posterior, caso necessário
@@ -127,7 +127,7 @@ class Controller_Pedido:
                     print("Itens do pedido removidos com sucesso!")
                     oracle.write(f"delete from pedidos where codigo_pedido = {codigo_pedido}")
                     # Cria um novo objeto Produto para informar que foi removido
-                    pedido_excluido = Pedido(df_pedido.codigo_pedido.values[0], df_pedido.data_pedido.values[0], cliente, fornecedor)
+                    pedido_excluido = User(df_pedido.codigo_pedido.values[0], df_pedido.data_pedido.values[0], cliente, fornecedor)
                     # Exibe os atributos do produto excluído
                     print("Pedido Removido com Sucesso!")
                     print(pedido_excluido.to_string())
@@ -162,7 +162,7 @@ class Controller_Pedido:
             oracle.connect()
         print(oracle.sqlToDataFrame(query))
 
-    def valida_cliente(self, oracle:OracleQueries, cpf:str=None) -> Cliente:
+    def valida_cliente(self, oracle:OracleQueries, cpf:str=None) -> Card:
         if self.ctrl_cliente.verifica_existencia_cliente(oracle, cpf):
             print(f"O CPF {cpf} informado não existe na base.")
             return None
@@ -171,10 +171,10 @@ class Controller_Pedido:
             # Recupera os dados do novo cliente criado transformando em um DataFrame
             df_cliente = oracle.sqlToDataFrame(f"select cpf, nome from clientes where cpf = {cpf}")
             # Cria um novo objeto cliente
-            cliente = Cliente(df_cliente.cpf.values[0], df_cliente.nome.values[0])
+            cliente = Card(df_cliente.cpf.values[0], df_cliente.nome.values[0])
             return cliente
 
-    def valida_fornecedor(self, oracle:OracleQueries, cnpj:str=None) -> Fornecedor:
+    def valida_fornecedor(self, oracle:OracleQueries, cnpj:str=None) -> Album:
         if self.ctrl_fornecedor.verifica_existencia_fornecedor(oracle, cnpj):
             print(f"O CNPJ {cnpj} informado não existe na base.")
             return None
@@ -183,5 +183,5 @@ class Controller_Pedido:
             # Recupera os dados do novo fornecedor criado transformando em um DataFrame
             df_fornecedor = oracle.sqlToDataFrame(f"select cnpj, razao_social, nome_fantasia from fornecedores where cnpj = {cnpj}")
             # Cria um novo objeto fornecedor
-            fornecedor = Fornecedor(df_fornecedor.cnpj.values[0], df_fornecedor.razao_social.values[0], df_fornecedor.nome_fantasia.values[0])
+            fornecedor = Album(df_fornecedor.cnpj.values[0], df_fornecedor.razao_social.values[0], df_fornecedor.nome_fantasia.values[0])
             return fornecedor

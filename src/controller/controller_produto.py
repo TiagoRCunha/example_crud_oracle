@@ -1,11 +1,11 @@
-from model.produtos import Produto
+from model.rarity import Rarity
 from conexion.oracle_queries import OracleQueries
 
 class Controller_Produto:
     def __init__(self):
         pass
         
-    def inserir_produto(self) -> Produto:
+    def inserir_produto(self) -> Rarity:
         ''' Ref.: https://cx-oracle.readthedocs.io/en/latest/user_guide/plsql_execution.html#anonymous-pl-sql-blocks'''
         
         # Cria uma nova conexão com o banco
@@ -34,13 +34,13 @@ class Controller_Produto:
         # Recupera os dados do novo produto criado transformando em um DataFrame
         df_produto = oracle.sqlToDataFrame(f"select codigo_produto, descricao_produto from produtos where codigo_produto = {codigo_produto}")
         # Cria um novo objeto Produto
-        novo_produto = Produto(df_produto.codigo_produto.values[0], df_produto.descricao_produto.values[0])
+        novo_produto = Rarity(df_produto.codigo_produto.values[0], df_produto.descricao_produto.values[0])
         # Exibe os atributos do novo produto
         print(novo_produto.to_string())
         # Retorna o objeto novo_produto para utilização posterior, caso necessário
         return novo_produto
 
-    def atualizar_produto(self) -> Produto:
+    def atualizar_produto(self) -> Rarity:
         # Cria uma nova conexão com o banco que permite alteração
         oracle = OracleQueries(can_write=True)
         oracle.connect()
@@ -57,7 +57,7 @@ class Controller_Produto:
             # Recupera os dados do novo produto criado transformando em um DataFrame
             df_produto = oracle.sqlToDataFrame(f"select codigo_produto, descricao_produto from produtos where codigo_produto = {codigo_produto}")
             # Cria um novo objeto Produto
-            produto_atualizado = Produto(df_produto.codigo_produto.values[0], df_produto.descricao_produto.values[0])
+            produto_atualizado = Rarity(df_produto.codigo_produto.values[0], df_produto.descricao_produto.values[0])
             # Exibe os atributos do novo produto
             print(produto_atualizado.to_string())
             # Retorna o objeto produto_atualizado para utilização posterior, caso necessário
@@ -81,7 +81,7 @@ class Controller_Produto:
             # Revome o produto da tabela
             oracle.write(f"delete from produtos where codigo_produto = {codigo_produto}")            
             # Cria um novo objeto Produto para informar que foi removido
-            produto_excluido = Produto(df_produto.codigo_produto.values[0], df_produto.descricao_produto.values[0])
+            produto_excluido = Rarity(df_produto.codigo_produto.values[0], df_produto.descricao_produto.values[0])
             # Exibe os atributos do produto excluído
             print("Produto Removido com Sucesso!")
             print(produto_excluido.to_string())

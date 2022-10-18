@@ -1,9 +1,9 @@
-from model.itens_pedido import ItemPedido
-from model.produtos import Produto
+from model.user_card import UserCard
+from model.rarity import Rarity
 from controller.controller_produto import Controller_Produto
-from model.pedidos import Pedido
+from model.user import User
 from controller.controller_pedido import Controller_Pedido
-from model.fornecedores import Fornecedor
+from model.album import Album
 from controller.controller_fornecedor import Controller_Fornecedor
 from conexion.oracle_queries import OracleQueries
 
@@ -13,7 +13,7 @@ class Controller_Item_Pedido:
         self.ctrl_pedido = Controller_Pedido()
         self.ctrl_fornecedor = Controller_Fornecedor()
         
-    def inserir_item_pedido(self) -> ItemPedido:
+    def inserir_item_pedido(self) -> UserCard:
         ''' Ref.: https://cx-oracle.readthedocs.io/en/latest/user_guide/plsql_execution.html#anonymous-pl-sql-blocks'''
         
         # Cria uma nova conexão com o banco
@@ -59,13 +59,13 @@ class Controller_Item_Pedido:
         # Recupera os dados do novo item de pedido criado transformando em um DataFrame
         df_item_pedido = oracle.sqlToDataFrame(f"select codigo_item_pedido, quantidade, valor_unitario, codigo_pedido, codigo_produto from itens_pedido where codigo_item_pedido = {codigo_item_pedido}")
         # Cria um novo objeto Item de Pedido
-        novo_item_pedido = ItemPedido(df_item_pedido.codigo_item_pedido.values[0], df_item_pedido.quantidade.values[0], df_item_pedido.valor_unitario.values[0], pedido, produto)
+        novo_item_pedido = UserCard(df_item_pedido.codigo_item_pedido.values[0], df_item_pedido.quantidade.values[0], df_item_pedido.valor_unitario.values[0], pedido, produto)
         # Exibe os atributos do novo Item de Pedido
         print(novo_item_pedido.to_string())
         # Retorna o objeto novo_item_pedido para utilização posterior, caso necessário
         return novo_item_pedido
 
-    def atualizar_item_pedido(self) -> ItemPedido:
+    def atualizar_item_pedido(self) -> UserCard:
         # Cria uma nova conexão com o banco que permite alteração
         oracle = OracleQueries(can_write=True)
         oracle.connect()
@@ -100,7 +100,7 @@ class Controller_Item_Pedido:
             # Recupera os dados do novo item de pedido criado transformando em um DataFrame
             df_item_pedido = oracle.sqlToDataFrame(f"select codigo_item_pedido, quantidade, valor_unitario, codigo_pedido, codigo_produto from itens_pedido where codigo_item_pedido = {codigo_item_pedido}")
             # Cria um novo objeto Item de Pedido
-            item_pedido_atualizado = ItemPedido(df_item_pedido.codigo_item_pedido.values[0], df_item_pedido.quantidade.values[0], df_item_pedido.valor_unitario.values[0], pedido, produto)
+            item_pedido_atualizado = UserCard(df_item_pedido.codigo_item_pedido.values[0], df_item_pedido.quantidade.values[0], df_item_pedido.valor_unitario.values[0], pedido, produto)
             # Exibe os atributos do item de pedido
             print(item_pedido_atualizado.to_string())
             # Retorna o objeto pedido_atualizado para utilização posterior, caso necessário
@@ -129,7 +129,7 @@ class Controller_Item_Pedido:
                 # Revome o produto da tabela
                 oracle.write(f"delete from itens_pedido where codigo_item_pedido = {codigo_item_pedido}")                
                 # Cria um novo objeto Item de Pedido para informar que foi removido
-                item_pedido_excluido = ItemPedido(df_item_pedido.codigo_item_pedido.values[0], df_item_pedido.quantidade.values[0], df_item_pedido.valor_unitario.values[0], pedido, produto)
+                item_pedido_excluido = UserCard(df_item_pedido.codigo_item_pedido.values[0], df_item_pedido.quantidade.values[0], df_item_pedido.valor_unitario.values[0], pedido, produto)
                 # Exibe os atributos do produto excluído
                 print("Item do Pedido Removido com Sucesso!")
                 print(item_pedido_excluido.to_string())
@@ -178,7 +178,7 @@ class Controller_Item_Pedido:
             oracle.connect()
         print(oracle.sqlToDataFrame(query))
 
-    def valida_pedido(self, oracle:OracleQueries, codigo_pedido:int=None) -> Pedido:
+    def valida_pedido(self, oracle:OracleQueries, codigo_pedido:int=None) -> User:
         if self.ctrl_pedido.verifica_existencia_pedido(oracle, codigo_pedido):
             print(f"O pedido {codigo_pedido} informado não existe na base.")
             return None
@@ -189,10 +189,10 @@ class Controller_Item_Pedido:
             cliente = self.ctrl_pedido.valida_cliente(oracle, df_pedido.cpf.values[0])
             fornecedor = self.ctrl_pedido.valida_fornecedor(oracle, df_pedido.cnpj.values[0])
             # Cria um novo objeto cliente
-            pedido = Pedido(df_pedido.codigo_pedido.values[0], df_pedido.data_pedido.values[0], cliente, fornecedor)
+            pedido = User(df_pedido.codigo_pedido.values[0], df_pedido.data_pedido.values[0], cliente, fornecedor)
             return pedido
 
-    def valida_produto(self, oracle:OracleQueries, codigo_produto:int=None) -> Produto:
+    def valida_produto(self, oracle:OracleQueries, codigo_produto:int=None) -> Rarity:
         if self.ctrl_produto.verifica_existencia_produto(oracle, codigo_produto):
             print(f"O produto {codigo_produto} informado não existe na base.")
             return None
@@ -201,5 +201,5 @@ class Controller_Item_Pedido:
             # Recupera os dados do novo produto criado transformando em um DataFrame
             df_produto = oracle.sqlToDataFrame(f"select codigo_produto, descricao_produto from produtos where codigo_produto = {codigo_produto}")
             # Cria um novo objeto Produto
-            produto = Produto(df_produto.codigo_produto.values[0], df_produto.descricao_produto.values[0])
+            produto = Rarity(df_produto.codigo_produto.values[0], df_produto.descricao_produto.values[0])
             return produto
