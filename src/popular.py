@@ -3,40 +3,21 @@ from conexion.oracle_queries import OracleQueries
 oracle = OracleQueries(can_write=True)
 oracle.connect()
 
-count = 1
-
 rarity_list = ["commom", "uncommon", "rare", "epic", "legendary"] # 0 = common, 1 = uncommon, 2 = rare, 3 = epic, 4 = legendary
 for x in range(len(rarity_list)):
     rarity_list[x] = int(oracle.sqlToDataFrame(f"select id from labdatabase.\"rarity\" where \"tier\" = '{x + 1}'").iloc[0]["id"])
-    count += 1
-    if count>len(rarity_list):
-        count = 1
-        x = 0
 
 album_list = ["Copa do Mundo 2022", "Pokemon", "Harry Potter"] # 0 = Copa do Mundo 2022, 1 = Pokemon, 2 = Harry Potter
 for x in range(len(album_list)):
     album_list[x] = int(oracle.sqlToDataFrame(f"select id from labdatabase.\"album\" where title = '{album_list[x]}'").iloc[0]["id"])
-    count += 1
-    if count>len(album_list):
-        count = 1
-        x = 0
 
 background_list = ["commom", "uncommon", "rare", "epic", "legendary"] # 0 = common, 1 = uncommon, 2 = rare, 3 = epic, 4 = legendary
 for x in range(len(background_list)):
     background_list[x] = int(oracle.sqlToDataFrame(f"select id from labdatabase.\"background\" where rarity_id = '{x + 1}'").iloc[0]["id"])
-    count += 1
-    if count>len(background_list):
-        count = 1
-        x = 0
 
 border_list = ["commom", "uncommon", "rare", "epic", "legendary"] # 0 = common, 1 = uncommon, 2 = rare, 3 = epic, 4 = legendary
-count = 1
 for x in range(len(border_list)):
     border_list[x] = int(oracle.sqlToDataFrame(f"select id from labdatabase.\"border\" where rarity_id = '{x + 1}'").iloc[0]["id"])
-    count += 1
-    if count>len(border_list):
-        count = 1
-        x = 0
 
 oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 4, 'mbappe.png', 'Kylian Mbappe', :1, :2, :3, :4)", [background_list[1], border_list[1], rarity_list[1], album_list[0]])
 oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 5, 'ronaldinho.png', 'Ronaldinho Gaucho', :1, :2, :3, :4)", [background_list[4], border_list[4], rarity_list[4], album_list[0]])
