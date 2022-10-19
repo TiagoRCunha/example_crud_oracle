@@ -10,8 +10,8 @@ CREATE VIEW admin_card_view AS (
         bg."name" AS "fundo_nome",
         r."name" AS "raridade",
         a.title AS "album_titulo",
-        c.created_at as "criado_em",
-        c.updated_at as "atualizado_em"
+        TO_CHAR(c.created_at, 'dd/mm/yyyy') as "criado_em",
+        TO_CHAR(c.updated_at, 'dd/mm/yyyy') as "atualizado_em"
     FROM labdatabase."card" c
     LEFT JOIN labdatabase."border" bd
     ON c.border_id = bd.id

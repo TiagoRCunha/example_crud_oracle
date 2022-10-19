@@ -6,8 +6,8 @@ CREATE VIEW admin_album_view AS (
       a.page_number AS "total_paginas",
       a."description" as "sobre",
       COUNT(u.id) as "contador_usuarios",
-      a.created_at as "criado_em",
-      a.updated_at as "atualizado_em"
+      TO_CHAR(a.created_at, 'dd/mm/yyyy') as "criado_em",
+      TO_CHAR(a.updated_at, 'dd/mm/yyyy') as "atualizado_em"
    FROM labdatabase."album" a
    LEFT JOIN labdatabase."user" u
    ON a.id = u.album_id

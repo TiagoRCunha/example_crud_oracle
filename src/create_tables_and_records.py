@@ -67,5 +67,6 @@ def run():
     print("View admin card successfully created!")
 
     populate_with_Oracle_queries()
+
 if __name__ == '__main__':
     run()

@@ -5,8 +5,8 @@ CREATE VIEW admin_users_view AS (
       u.access_type AS "tipo_acesso",
       a.title AS "album",
       COUNT(uc.card_id) AS "contador_cartas",
-      u.created_at as "criado_em",
-      u.updated_at as "atualizado_em"
+      TO_CHAR(u.created_at, 'dd/mm/yyyy') as "criado_em",
+      TO_CHAR(u.updated_at, 'dd/mm/yyyy') as "atualizado_em"
    FROM labdatabase."user" u
    LEFT JOIN labdatabase."album" a
    ON a.id = u.album_id
