@@ -42,14 +42,22 @@ DROP TABLE labdatabase."user_card";
 
 DROP SEQUENCE labdatabase.album_id_seq;
 DROP SEQUENCE labdatabase.user_id_seq;
-DROP SEQUENCE labdatabase.rarity_id_seq;
 DROP SEQUENCE labdatabase.card_id_seq;
 DROP SEQUENCE labdatabase.border_id_seq;
 DROP SEQUENCE labdatabase.background_id_seq;
 DROP SEQUENCE labdatabase.tag_id_seq;
+DROP SEQUENCE labdatabase.rarity_id_seq;
+
+CREATE SEQUENCE labdatabase.album_id_seq;
+CREATE SEQUENCE labdatabase.user_id_seq;
+CREATE SEQUENCE labdatabase.card_id_seq;
+CREATE SEQUENCE labdatabase.border_id_seq;
+CREATE SEQUENCE labdatabase.background_id_seq;
+CREATE SEQUENCE labdatabase.tag_id_seq;
+CREATE SEQUENCE labdatabase.rarity_id_seq;
 
 CREATE TABLE labdatabase."album" (
-    id NUMBER NOT NULL,
+    id NUMBER DEFAULT labdatabase.album_id_seq.NEXTVAL NOT NULL,
     title VARCHAR2(40) NOT NULL,
     card_count  NUMBER NOT NULL,
     page_number NUMBER NOT NULL,
@@ -60,7 +68,7 @@ CREATE TABLE labdatabase."album" (
 );
 
 CREATE TABLE labdatabase."user" (
-    id NUMBER NOT NULL,
+    id NUMBER DEFAULT labdatabase.user_id_seq.NEXTVAL NOT NULL,
     username VARCHAR2(50) NOT NULL,
     "password"  VARCHAR(255) NOT NULL,
     access_type NUMBER NOT NULL,
@@ -70,7 +78,7 @@ CREATE TABLE labdatabase."user" (
 );
 
 CREATE TABLE labdatabase."card" (
-    id NUMBER NOT NULL,
+    id NUMBER DEFAULT labdatabase.card_id_seq.NEXTVAL NOT NULL,
     "number" NUMBER NOT NULL,
     "image"  VARCHAR2(155) NOT NULL,
     "name" VARCHAR2(40) NOT NULL,
@@ -80,7 +88,7 @@ CREATE TABLE labdatabase."card" (
 );
 
 CREATE TABLE labdatabase."border" (
-    id NUMBER NOT NULL,
+    id NUMBER DEFAULT labdatabase.border_id_seq.NEXTVAL NOT NULL,
     "image"  VARCHAR2(155),
     "name" VARCHAR2(40),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -89,7 +97,7 @@ CREATE TABLE labdatabase."border" (
 );
 
 CREATE TABLE labdatabase."background" (
-    id NUMBER NOT NULL,
+    id NUMBER DEFAULT labdatabase.background_id_seq.NEXTVAL NOT NULL,
     "image"  VARCHAR2(155),
     "name" VARCHAR2(40),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -98,7 +106,7 @@ CREATE TABLE labdatabase."background" (
 );
 
 CREATE TABLE labdatabase."tag" (
-    id NUMBER NOT NULL,
+    id NUMBER DEFAULT labdatabase.tag_id_seq.NEXTVAL NOT NULL,
     "name" VARCHAR2(40) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -106,7 +114,7 @@ CREATE TABLE labdatabase."tag" (
 );
 
 CREATE TABLE labdatabase."rarity" (
-    id NUMBER NOT NULL,
+    id NUMBER DEFAULT labdatabase.rarity_id_seq.NEXTVAL NOT NULL,
     "name" VARCHAR2(40) NOT NULL,
     "tier" NUMBER NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -161,14 +169,6 @@ CREATE TABLE labdatabase."user_card" (
     CONSTRAINT user_card_user_id_fk FOREIGN KEY ( user_id )
     REFERENCES labdatabase."user" (id) NOT DEFERRABLE
 );
-
-CREATE SEQUENCE labdatabase.album_id_seq;
-CREATE SEQUENCE labdatabase.user_id_seq;
-CREATE SEQUENCE labdatabase.rarity_id_seq;
-CREATE SEQUENCE labdatabase.card_id_seq;
-CREATE SEQUENCE labdatabase.border_id_seq;
-CREATE SEQUENCE labdatabase.background_id_seq;
-CREATE SEQUENCE labdatabase.tag_id_seq;
 
 ALTER TABLE labdatabase."user" ADD album_id NUMBER NOT NULL;
 ALTER TABLE labdatabase."user" ADD CONSTRAINT user_album_id_fk
