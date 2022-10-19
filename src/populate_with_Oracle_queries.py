@@ -1,6 +1,6 @@
 from conexion.oracle_queries import OracleQueries
 
-def populate():
+def populate_with_Oracle_queries():
     oracle = OracleQueries(can_write=True)
     oracle.connect()
 

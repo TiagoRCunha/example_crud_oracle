@@ -1,5 +1,5 @@
 from conexion.oracle_queries import OracleQueries
-from popular import populate
+from populate_with_Oracle_queries import populate_with_Oracle_queries
 
 def create_tables(query:str):
     list_of_commands = query.split(";")
@@ -40,11 +40,10 @@ def run():
     with open("../sql/insert_values.sql") as f:
         query_generate_records = f.read()
 
-    print("Generating records")
-    generate_records(query=query_generate_records, sep="--")
+    print("Gerenating records")
+    generate_records(query=query_generate_records, sep='--')
     print("Records successfully generated!")
 
-    populate()
-
+    populate_with_Oracle_queries()
 if __name__ == '__main__':
     run()
