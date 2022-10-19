@@ -10,6 +10,7 @@
 #                  (3) https://cx-oracle.readthedocs.io/en/latest/index.html
 ###########################################################################
 import json
+from typing import Any
 import cx_Oracle
 from pandas import DataFrame
 
@@ -23,7 +24,7 @@ class OracleQueries:
         self.sid = 'XE'
 
         with open("conexion/passphrase/authentication.oracle", "r") as f:
-            self.user, self.passwd = f.read().split(',')            
+            self.user, self.passwd = f.read().split(',')
 
     def __del__(self):
         if self.cur:
@@ -44,7 +45,7 @@ class OracleQueries:
                                                 port=self.port,
                                                 sid=self.sid
                                                 )
-        elif in_container:
+        else:
             string_connection = cx_Oracle.makedsn(host=self.host,
                                                 port=self.port,
                                                 service_name=self.service_name
@@ -64,49 +65,49 @@ class OracleQueries:
 
         self.conn = cx_Oracle.connect(user=self.user,
                                       password=self.passwd,
-                                      dsn=self.connectionString()
+                                      dsn=self.connectionString(True)
                                      )
         self.cur = self.conn.cursor()
         return self.cur
 
-    def sqlToDataFrame(self, query:str) -> DataFrame:
+    def sqlToDataFrame(self, query: str, parameters: Any = []) -> DataFrame:
         '''
         Esse método irá executar uma query
         Parameters:
         - query: consulta utilizada para recuperação dos dados
         return: um DataFrame da biblioteca Pandas
         '''
-        self.cur.execute(query)
+        self.cur.execute(query, parameters)
         rows = self.cur.fetchall()
         return DataFrame(rows, columns=[col[0].lower() for col in self.cur.description])
 
-    def sqlToMatrix(self, query:str) -> tuple:
+    def sqlToMatrix(self, query: str, parameters: Any = []) -> tuple:
         '''
         Esse método irá executar uma query
         Parameters:
         - query: consulta utilizada para recuperação dos dados
         return: uma matriz (lista de listas), uma lista com os nomes das colunas(atributos) da(s) tabela(s)
         '''
-        self.cur.execute(query)
+        self.cur.execute(query, parameters)
         rows = self.cur.fetchall()
         matrix = [list(row) for row in rows]
         columns = [col[0].lower() for col in self.cur.description]
         return matrix, columns
 
-    def sqlToJson(self, query:str):
+    def sqlToJson(self, query: str, parameters: Any = []):
         '''
         Esse método irá executar uma query
         Parameters:
         - query: consulta utilizada para recuperação dos dados
         return: um objeto json
         '''
-        self.cur.execute(query)
+        self.cur.execute(query, parameters)
         columns = [col[0].lower() for col in self.cur.description]
         self.cur.rowfactory = lambda *args: dict(zip(columns, args))
         rows = self.cur.fetchall()
         return json.dumps(rows, default=str)
 
-    def write(self, query:str, parameters:any):
+    def write(self, query: str, parameters: Any = []):
         if not self.can_write:
             raise Exception('Can\'t write using this connection')
 
@@ -117,10 +118,10 @@ class OracleQueries:
         if self.cur:
             self.cur.close()
 
-    def executeDDL(self, query:str):
+    def executeDDL(self, query: str, parameters: Any = []):
         '''
         Esse método irá executar o comando DDL enviado no atributo query
         Parameters:
         - query: consulta utilizada para comandos DDL
         '''
-        self.cur.execute(query)
+        self.cur.execute(query, parameters)
