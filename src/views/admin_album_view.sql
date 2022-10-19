@@ -1,5 +1,4 @@
 DROP VIEW admin_album_view;
-
 CREATE VIEW admin_album_view AS (
    SELECT a.id,
       a.title AS "titulo",

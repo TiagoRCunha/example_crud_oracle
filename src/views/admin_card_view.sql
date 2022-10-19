@@ -1,5 +1,4 @@
 DROP VIEW admin_card_view;
-
 CREATE VIEW admin_card_view AS (
     SELECT c.id,
         c."name" AS "nome",

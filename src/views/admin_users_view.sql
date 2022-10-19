@@ -1,5 +1,4 @@
 DROP VIEW admin_users_view;
-
 CREATE VIEW admin_users_view AS (
    SELECT u.id,
       u.username AS "nome",

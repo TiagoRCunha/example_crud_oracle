@@ -63,7 +63,7 @@ def run():
         query_view = f.read()
 
     print("Creating view...")
-    generate_records(query=query_view)
+    create_tables(query=query_view)
     print("View admin card successfully created!")
 
     populate_with_Oracle_queries()
