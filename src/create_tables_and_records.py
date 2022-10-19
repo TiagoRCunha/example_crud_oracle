@@ -43,6 +43,28 @@ def run():
     print("Gerenating records")
     generate_records(query=query_generate_records, sep='--')
     print("Records successfully generated!")
+   
+    with open("./views/admin_album_view.sql") as f:
+        query_view = f.read()
+
+    print("Creating view...")
+    create_tables(query=query_view)
+    print("View admin album successfully created!")
+
+
+    with open("./views/admin_card_view.sql") as f:
+        query_view = f.read()
+
+    print("Creating view...")
+    create_tables(query=query_view)
+    print("View admin card successfully created!")
+
+    with open("./views/admin_users_view.sql") as f:
+        query_view = f.read()
+
+    print("Creating view...")
+    generate_records(query=query_view)
+    print("View admin card successfully created!")
 
     populate_with_Oracle_queries()
 if __name__ == '__main__':
