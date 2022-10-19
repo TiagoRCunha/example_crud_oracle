@@ -1,4 +1,5 @@
 from conexion.oracle_queries import OracleQueries
+from popular import populate
 
 def create_tables(query:str):
     list_of_commands = query.split(";")
@@ -6,14 +7,14 @@ def create_tables(query:str):
     oracle = OracleQueries(can_write=True)
     oracle.connect()
 
-    for command in list_of_commands:    
+    for command in list_of_commands:
         if len(command) > 0:
             print(command)
             try:
                 oracle.executeDDL(command)
                 print("Successfully executed")
             except Exception as e:
-                print(e)            
+                print(e)
 
 def generate_records(query:str, sep:str=';'):
     list_of_commands = query.split(sep)
@@ -21,7 +22,7 @@ def generate_records(query:str, sep:str=';'):
     oracle = OracleQueries(can_write=True)
     oracle.connect()
 
-    for command in list_of_commands:    
+    for command in list_of_commands:
         if len(command) > 0:
             print(command)
             oracle.write(command)
@@ -29,26 +30,21 @@ def generate_records(query:str, sep:str=';'):
 
 def run():
 
-    """ with open("../sql/create_tables_pedidos.sql") as f:
+    with open("../sql/create_tables.sql") as f:
         query_create = f.read()
 
     print("Creating tables...")
     create_tables(query=query_create)
     print("Tables successfully created!")
 
-    with open("../sql/inserting_samples_records.sql") as f:
+    with open("../sql/insert_values.sql") as f:
         query_generate_records = f.read()
 
-    print("Gerenating records")
-    generate_records(query=query_generate_records)
+    print("Generating records")
+    generate_records(query=query_generate_records, sep="--")
     print("Records successfully generated!")
 
-    with open("../sql/inserting_samples_related_records.sql") as f:
-        query_generate_related_records = f.read()
-
-    print("Gerenating records")
-    generate_records(query=query_generate_related_records, sep='--')
-    print("Records successfully generated!") """
+    populate()
 
 if __name__ == '__main__':
     run()

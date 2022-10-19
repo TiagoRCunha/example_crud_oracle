@@ -38,6 +38,7 @@ DROP TABLE labdatabase."rarity";
 DROP TABLE labdatabase."card_tag";
 DROP TABLE labdatabase."border_tag";
 DROP TABLE labdatabase."background_tag";
+DROP TABLE labdatabase."user_card";
 
 DROP SEQUENCE labdatabase.album_id_seq;
 DROP SEQUENCE labdatabase.user_id_seq;
