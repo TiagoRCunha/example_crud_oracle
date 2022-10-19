@@ -1,5 +1,5 @@
 from conexion.oracle_queries import OracleQueries
-from popular import populate
+from populate_with_Oracle_queries import populate_with_Oracle_queries
 
 def create_tables(query:str):
     list_of_commands = query.split(";")
@@ -40,11 +40,33 @@ def run():
     with open("../sql/insert_values.sql") as f:
         query_generate_records = f.read()
 
-    print("Generating records")
-    generate_records(query=query_generate_records, sep="--")
+    print("Gerenating records")
+    generate_records(query=query_generate_records, sep='--')
     print("Records successfully generated!")
+   
+    with open("./views/admin_album_view.sql") as f:
+        query_view = f.read()
 
-    populate()
+    print("Creating view...")
+    create_tables(query=query_view)
+    print("View admin album successfully created!")
+
+
+    with open("./views/admin_card_view.sql") as f:
+        query_view = f.read()
+
+    print("Creating view...")
+    create_tables(query=query_view)
+    print("View admin card successfully created!")
+
+    with open("./views/admin_users_view.sql") as f:
+        query_view = f.read()
+
+    print("Creating view...")
+    create_tables(query=query_view)
+    print("View admin card successfully created!")
+
+    populate_with_Oracle_queries()
 
 if __name__ == '__main__':
     run()
