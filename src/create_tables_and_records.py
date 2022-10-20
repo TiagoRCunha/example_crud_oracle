@@ -44,7 +44,7 @@ def run():
     generate_records(query=query_generate_records, sep='--')
     print("Records successfully generated!")
    
-    with open("./views/admin_album_view.sql") as f:
+    with open("./sql/admin_album_view.sql") as f:
         query_view = f.read()
 
     print("Creating view...")
@@ -52,14 +52,14 @@ def run():
     print("View admin album successfully created!")
 
 
-    with open("./views/admin_card_view.sql") as f:
+    with open("./sql/admin_card_view.sql") as f:
         query_view = f.read()
 
     print("Creating view...")
     create_tables(query=query_view)
     print("View admin card successfully created!")
 
-    with open("./views/admin_users_view.sql") as f:
+    with open("./sql/admin_users_view.sql") as f:
         query_view = f.read()
 
     print("Creating view...")

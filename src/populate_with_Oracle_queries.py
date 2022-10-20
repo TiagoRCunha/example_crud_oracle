@@ -1,100 +1,102 @@
 from conexion.oracle_queries import OracleQueries
 
+def getIlocId(param) -> int:
+    oracle = OracleQueries(can_write=True)
+    oracle.connect()
+    return int(oracle.sqlToDataFrame(param).iloc[0]["id"])
+
 def populate_with_Oracle_queries():
     oracle = OracleQueries(can_write=True)
     oracle.connect()
 
-    rarity_list = ["commom", "uncommon", "rare", "epic", "legendary"] # 0 = common, 1 = uncommon, 2 = rare, 3 = epic, 4 = legendary
+    query_card_select = "SELECT id, \"name\" FROM \"card\" WHERE \"name\" = "
+    query_card_insert = "insert into \"card\" (\"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(:1, :2, :3, :4, :5, :6, :7)"
+    query_rarity_select = "SELECT id, \"tier\" FROM \"rarity\" WHERE \"tier\" = "
+    query_album_select = "select id from \"album\" where title = "
+    query_tag_select = "select id, \"name\" from \"tag\" where \"name\" = "
+    query_card_tag_insert = "insert into \"card_tag\" (card_id, tag_id) values(:1, :2)"
+    query_background_select = "select id from \"background\" where rarity_id = "
+    query_border_select = "select id from \"border\" where rarity_id = "
+   
+    rarity_list = ["commom", "uncommon", "rare", "epic", "legendary"]
     for x in range(len(rarity_list)):
-        rarity_list[x] = int(oracle.sqlToDataFrame(f"select id from labdatabase.\"rarity\" where \"tier\" = '{x + 1}'").iloc[0]["id"])
+        rarity_list[x] = getIlocId(query_rarity_select + str(x + 1))
 
-    album_list = ["Copa do Mundo 2022", "Pokemon", "Harry Potter"] # 0 = Copa do Mundo 2022, 1 = Pokemon, 2 = Harry Potter
+    album_list = ["Copa do Mundo 2022", "Pokemon", "Harry Potter"]
     for x in range(len(album_list)):
-        album_list[x] = int(oracle.sqlToDataFrame(f"select id from labdatabase.\"album\" where title = '{album_list[x]}'").iloc[0]["id"])
+        album_list[x] = getIlocId(query_album_select + f"\'{album_list[x]}\'")
 
-    background_list = ["commom", "uncommon", "rare", "epic", "legendary"] # 0 = common, 1 = uncommon, 2 = rare, 3 = epic, 4 = legendary
+    background_list = ["commom", "uncommon", "rare", "epic", "legendary"]
     for x in range(len(background_list)):
-        background_list[x] = int(oracle.sqlToDataFrame(f"select id from labdatabase.\"background\" where rarity_id = '{x + 1}'").iloc[0]["id"])
+        background_list[x] = getIlocId(query_background_select + str(x + 1))
 
-    border_list = ["commom", "uncommon", "rare", "epic", "legendary"] # 0 = common, 1 = uncommon, 2 = rare, 3 = epic, 4 = legendary
+    border_list = ["commom", "uncommon", "rare", "epic", "legendary"]
     for x in range(len(border_list)):
-        border_list[x] = int(oracle.sqlToDataFrame(f"select id from labdatabase.\"border\" where rarity_id = '{x + 1}'").iloc[0]["id"])
+        border_list[x] = getIlocId(query_border_select + str(x + 1))
 
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 4, 'mbappe.png', 'Kylian Mbappe', :1, :2, :3, :4)", [background_list[1], border_list[1], rarity_list[1], album_list[0]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 5, 'ronaldinho.png', 'Ronaldinho Gaucho', :1, :2, :3, :4)", [background_list[4], border_list[4], rarity_list[4], album_list[0]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 6, 'ibrahimovic.png', 'Zlatan Ibrahimovic', :1, :2, :3, :4)", [background_list[3], border_list[3], rarity_list[3], album_list[0]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 7, 'zidane.png', 'Zinédine Zidane', :1, :2, :3, :4)", [background_list[0], border_list[0], rarity_list[0], album_list[0]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 8, 'kaka.png', 'Kaka', :1, :2, :3, :4)", [background_list[0], border_list[0], rarity_list[0], album_list[0]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 9, 'pele.png', 'Pele', :1, :2, :3, :4)", [background_list[2], border_list[2], rarity_list[2], album_list[0]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 10, 'maradona.png', 'Diego Maradona', :1, :2, :3, :4)", [background_list[1], border_list[1], rarity_list[1], album_list[0]])
+    oracle.write(query_card_insert, [4, 'mbappe.png', 'Kylian Mbappe', background_list[1], border_list[1], rarity_list[1], album_list[0]])
+    oracle.write(query_card_insert, [5, 'ronaldinho.png', 'Ronaldinho Gaucho', background_list[4], border_list[4], rarity_list[4], album_list[0]])
+    oracle.write(query_card_insert, [6, 'ibrahimovic.png', 'Zlatan Ibrahimovic', background_list[3], border_list[3], rarity_list[3], album_list[0]])
+    oracle.write(query_card_insert, [7, 'zidane.png', 'Zinédine Zidane', background_list[0], border_list[0], rarity_list[0], album_list[0]])
+    oracle.write(query_card_insert, [8, 'kaka.png', 'Kaka', background_list[0], border_list[0], rarity_list[0], album_list[0]])
+    oracle.write(query_card_insert, [9, 'pele.png', 'Pele', background_list[2], border_list[2], rarity_list[2], album_list[0]])
+    oracle.write(query_card_insert, [10, 'maradona.png', 'Diego Maradona', background_list[1], border_list[1], rarity_list[1], album_list[0]])
 
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 4, 'squirtle.png', 'Squirtle', :1, :2, :3, :4)", [background_list[0], border_list[0], rarity_list[0], album_list[1]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 5, 'pidgey.png', 'Pidgey', :1, :2, :3, :4)", [background_list[1], border_list[1], rarity_list[1], album_list[1]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 6, 'psyduck.png', 'Psyduck', :1, :2, :3, :4)", [background_list[2], border_list[2], rarity_list[2], album_list[1]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 7, 'onix.png', 'Onix', :1, :2, :3, :4)", [background_list[0], border_list[0], rarity_list[0], album_list[1]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 8, 'eevee.png', 'Eevee', :1, :2, :3, :4)", [background_list[2], border_list[2], rarity_list[2], album_list[1]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 9, 'dratini.png', 'Dratini', :1, :2, :3, :4)", [background_list[0], border_list[0], rarity_list[0], album_list[1]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 10, 'articuno.png', 'Articuno', :1, :2, :3, :4)", [background_list[4], border_list[4], rarity_list[4], album_list[1]])
+    oracle.write(query_card_insert, [4, 'squirtle.png', 'Squirtle', background_list[0], border_list[0], rarity_list[0], album_list[1]])
+    oracle.write(query_card_insert, [5, 'pidgey.png', 'Pidgey', background_list[1], border_list[1], rarity_list[1], album_list[1]])
+    oracle.write(query_card_insert, [6, 'psyduck.png', 'Psyduck', background_list[2], border_list[2], rarity_list[2], album_list[1]])
+    oracle.write(query_card_insert, [7, 'onix.png', 'Onix', background_list[0], border_list[0], rarity_list[0], album_list[1]])
+    oracle.write(query_card_insert, [8, 'eevee.png', 'Eevee', background_list[2], border_list[2], rarity_list[2], album_list[1]])
+    oracle.write(query_card_insert, [9, 'dratini.png', 'Dratini', background_list[0], border_list[0], rarity_list[0], album_list[1]])
+    oracle.write(query_card_insert, [10, 'articuno.png', 'Articuno', background_list[4], border_list[4], rarity_list[4], album_list[1]])
 
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 4, 'hagrid.png', 'Rubeo Hagrid', :1, :2, :3, :4)", [background_list[1], border_list[1], rarity_list[1], album_list[2]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 5, 'dumbledore.png', 'Albus Dumbledore', :1, :2, :3, :4)", [background_list[4], border_list[4], rarity_list[4], album_list[2]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 6, 'voldemort.png', 'Lord Voldemort', :1, :2, :3, :4)", [background_list[3], border_list[3], rarity_list[3], album_list[2]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 7, 'snape.png', 'Severus Snape', :1, :2, :3, :4)", [background_list[2], border_list[2], rarity_list[2], album_list[2]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 8, 'bellatrix.png', 'Bellatrix Lestrange', :1, :2, :3, :4)", [background_list[0], border_list[0], rarity_list[0], album_list[2]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 9, 'dobby.png', 'Dobby', :1, :2, :3, :4)", [background_list[0], border_list[0], rarity_list[0], album_list[2]])
-    oracle.write("insert into \"card\" (id, \"number\", \"image\", \"name\", background_id, border_id, rarity_id, album_id) values(card_id_seq.NEXTVAL, 10, 'sirius.png', 'Sirius Black', :1, :2, :3, :4)", [background_list[0], border_list[0], rarity_list[0], album_list[2]])
+    oracle.write(query_card_insert, [4, 'hagrid.png', 'Rubeo Hagrid', background_list[1], border_list[1], rarity_list[1], album_list[2]])
+    oracle.write(query_card_insert, [5, 'dumbledore.png', 'Albus Dumbledore', background_list[4], border_list[4], rarity_list[4], album_list[2]])
+    oracle.write(query_card_insert, [6, 'voldemort.png', 'Lord Voldemort', background_list[3], border_list[3], rarity_list[3], album_list[2]])
+    oracle.write(query_card_insert, [7, 'snape.png', 'Severus Snape', background_list[2], border_list[2], rarity_list[2], album_list[2]])
+    oracle.write(query_card_insert, [8, 'bellatrix.png', 'Bellatrix Lestrange', background_list[0], border_list[0], rarity_list[0], album_list[2]])
+    oracle.write(query_card_insert, [9, 'dobby.png', 'Dobby', background_list[0], border_list[0], rarity_list[0], album_list[2]])
+    oracle.write(query_card_insert, [10, 'sirius.png', 'Sirius Black', background_list[0], border_list[0], rarity_list[0], album_list[2]])
 
-    attacker_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Attacker'")
-    mid_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Mid'")
-    water_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Water'")
-    grass_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Grass'")
-    fire_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Fire'")
-    electric_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Electric'")
-    poison_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Poison'")
-    flying_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Flying'")
-    normal_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Normal'")
-    dragon_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Dragon'")
-    ice_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Ice'")
-    stone_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Stone'")
-    wizard_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Wizard'")
-    elf_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Elf'")
-    death_eaters_tag_id = oracle.sqlToDataFrame("select id from labdatabase.\"tag\" where \"name\" = 'Death Eaters'")
+    tag_names = ["Attacker", "Mid", "Water", "Grass", "Fire", "Electric", "Poison", "Flying", "Normal", "Dragon", "Ice", "Stone", "Wizard", "Elf", "Death Eaters"]
+    tag_ids = []
+    for x in range(len(tag_names)):
+        tag_ids.append(getIlocId(query_tag_select + f"\'{tag_names[x]}\'"))
 
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Neymar Junior'").iloc[0]["id"]), int(attacker_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Lionel Messi'").iloc[0]["id"]), int(attacker_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Cristiano Ronaldo'").iloc[0]["id"]), int(attacker_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Kylian Mbappe'").iloc[0]["id"]), int(attacker_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Zlatan Ibrahimovic'").iloc[0]["id"]), int(attacker_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Pele'").iloc[0]["id"]), int(attacker_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Diego Maradona'").iloc[0]["id"]), int(mid_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Ronaldinho Gaucho'").iloc[0]["id"]), int(mid_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Zinédine Zidane'").iloc[0]["id"]), int(mid_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Kaka'").iloc[0]["id"]), int(mid_tag_id.iloc[0]["id"])])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Neymar Junior\'"), tag_ids[0]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Lionel Messi\'"), tag_ids[0]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Cristiano Ronaldo\'"), tag_ids[0]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Kylian Mbappe\'"), tag_ids[0]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Zlatan Ibrahimovic\'"), tag_ids[0]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Pele\'"), tag_ids[0]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Diego Maradona\'"), tag_ids[1]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Ronaldinho Gaucho\'"), tag_ids[1]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Zinédine Zidane\'"), tag_ids[1]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Kaka\'"), tag_ids[1]])
 
 
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Squirtle'").iloc[0]["id"]), int(water_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Psyduck'").iloc[0]["id"]), int(water_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Eevee'").iloc[0]["id"]), int(normal_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Pidgey'").iloc[0]["id"]), int(normal_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Articuno'").iloc[0]["id"]), int(flying_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Articuno'").iloc[0]["id"]), int(ice_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Dratini'").iloc[0]["id"]), int(ice_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Dratini'").iloc[0]["id"]), int(dragon_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Bulbasaur'").iloc[0]["id"]), int(grass_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Bulbasaur'").iloc[0]["id"]), int(poison_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Charmander'").iloc[0]["id"]), int(fire_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Pikachu'").iloc[0]["id"]), int(electric_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Onix'").iloc[0]["id"]), int(stone_tag_id.iloc[0]["id"])])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Squirtle\'"), tag_ids[2]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Psyduck\'"), tag_ids[2]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Eevee\'"), tag_ids[3]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Pidgey\'"), tag_ids[3]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Articuno\'"), tag_ids[7]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Articuno\'"), tag_ids[10]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Dratini\'"), tag_ids[10]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Dratini\'"), tag_ids[9]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Bulbasaur\'"), tag_ids[3]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Bulbasaur\'"), tag_ids[6]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Charmander\'"), tag_ids[4]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Pikachu\'"), tag_ids[5]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Onix\'"), tag_ids[11]])
 
 
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Harry Potter'").iloc[0]["id"]), int(wizard_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Rony Weasley'").iloc[0]["id"]), int(wizard_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Hermione Granger'").iloc[0]["id"]), int(wizard_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Rubeo Hagrid'").iloc[0]["id"]), int(wizard_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Albus Dumbledore'").iloc[0]["id"]), int(wizard_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Severus Snape'").iloc[0]["id"]), int(wizard_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Sirius Black'").iloc[0]["id"]), int(wizard_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Dobby'").iloc[0]["id"]), int(elf_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Lord Voldemort'").iloc[0]["id"]), int(death_eaters_tag_id.iloc[0]["id"])])
-    oracle.write("insert into \"card_tag\" (card_id, tag_id) values(:1, :2)", [int(oracle.sqlToDataFrame("select id from labdatabase.\"card\" where \"name\" = 'Bellatrix Lestrange'").iloc[0]["id"]), int(death_eaters_tag_id.iloc[0]["id"])])
-
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Harry Potter\'"), tag_ids[12]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Rony Weasley\'"), tag_ids[12]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Hermione Granger\'"), tag_ids[12]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Rubeo Hagrid\'"), tag_ids[12]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Albus Dumbledore\'"), tag_ids[12]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Severus Snape\'"), tag_ids[12]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Sirius Black\'"), tag_ids[12]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Dobby\'"), tag_ids[13]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Lord Voldemort\'"), tag_ids[14]])
+    oracle.write(query_card_tag_insert, [getIlocId(query_card_select + "\'Bellatrix Lestrange\'"), tag_ids[14]])

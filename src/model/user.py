@@ -4,40 +4,31 @@ from model.album import Album
 
 class User:
     def __init__(self, 
-                 codigo_pedido:int=None,
-                 data_pedido:date=None,
-                 cliente:Card= None,
-                 fornecedor:Album=None
+                 username:str=None,
+                 password:str=None,
+                 access_type:int= None
                  ):
-        self.set_codigo_pedido(codigo_pedido)
-        self.set_data_pedido(data_pedido)
-        self.set_cliente(cliente)
-        self.set_fornecedor(fornecedor)
+        self.set_username(username)
+        self.set_password(password)
+        self.set_access_type(access_type)
 
+    def set_username(self, username:int):
+        self.username = username
 
-    def set_codigo_pedido(self, codigo_pedido:int):
-        self.codigo_pedido = codigo_pedido
+    def set_password(self, password:date):
+        self.password = password
 
-    def set_data_pedido(self, data_pedido:date):
-        self.data_pedido = data_pedido
+    def set_access_type(self, access_type:Card):
+        self.access_type = access_type
 
-    def set_cliente(self, cliente:Card):
-        self.cliente = cliente
+    def get_username(self) -> int:
+        return self.username
 
-    def set_fornecedor(self, fornecedor:Album):
-        self.fornecedor = fornecedor
+    def get_password(self) -> str:
+        return self.password
 
-    def get_codigo_pedido(self) -> int:
-        return self.codigo_pedido
-
-    def get_data_pedido(self) -> date:
-        return self.data_pedido
-
-    def get_cliente(self) -> Card:
-        return self.cliente
-
-    def get_fornecedor(self) -> Album:
-        return self.fornecedor
+    def get_access_type(self) -> int:
+        return self.access_type
 
     def to_string(self) -> str:
-        return f"Pedido: {self.get_codigo_pedido()} | Data: {self.get_data_pedido()} | Cliente: {self.get_cliente().get_name()} | Fornecedor: {self.get_fornecedor().get_nome_fantasia()}"
+        return f"Nome: {self.get_username()} | Tipo de acesso: {self.get_access_type()}"
