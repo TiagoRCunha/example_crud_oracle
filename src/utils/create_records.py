@@ -1,3 +1,4 @@
+from controller.controller_tag import TagController
 import utils.config as config
 from utils.records import Records
 
@@ -167,7 +168,7 @@ def create_tag():
         if name == "0":
             config.clear_console(1)
             return None
-        #CRIA TAG
+        print(TagController().insert(name).to_string())
         if menu_continue() == 2:
             return None
         config.clear_console(1)
