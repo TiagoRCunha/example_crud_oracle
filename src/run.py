@@ -1,8 +1,6 @@
 import utils.config as config
 from utils.records import Records
-import utils.create_records as create_records
-import utils.remove_records as remove_records
-import utils.update_records as update_records
+from utils import create_records, remove_records, update_records
 
 def run():
 
