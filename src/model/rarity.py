@@ -1,17 +1,21 @@
-class Rarity:
-    def __init__(self, 
-                 id:int=None,
-                 name:str=None,
-                 tier:int=None
-                 ):
-        self.id = id
-        self.set_name(name)
-        self.set_tier(tier)
+from typing import Optional
 
-    def set_name(self, name:str):
+
+class Rarity:
+    def __init__(
+        self,
+        id: Optional[int] = None,
+        name: Optional[str] = None,
+        tier: Optional[int] = None,
+    ):
+        self.id = id or 0
+        self.set_name(name or "")
+        self.set_tier(tier or 0)
+
+    def set_name(self, name: str):
         self.name = name
 
-    def set_tier(self, tier:int):
+    def set_tier(self, tier: int):
         self.tier = tier
 
     def get_id(self) -> int:
