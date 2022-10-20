@@ -2,27 +2,33 @@ import menus
 from records import Records
 
 def select_album_update():
-    print(menus.MENU_ADMIN_ALBUNS_AVAIBLES)
-    albuns_list = Records().list_albuns()
-    for x in range(albuns_list.shape[0]):
-        print(f"{x + 1} - " + albuns_list.iloc[x]["title"])
-    print(menus.MENU_SPLIT)
-    id = input("Digite o número do album que deseja alterar ou 0 para sair\n")
     loop = True
     while loop:
+        print(menus.MENU_ADMIN_ALBUNS_AVAIBLES)
+        albuns_list = Records().list_albuns()
+        for x in range(albuns_list.shape[0]):
+            print(f"{x + 1} - " + albuns_list.iloc[x]["title"])
+        print(menus.MENU_SPLIT)
+        id = input("Digite o número do album que deseja alterar ou 0 para sair\n")
         id_verification = Records().show_album(id)
         if id == "0":
-            loop = False
-            return None
-        elif not id_verification.empty:
             menus.clear_console(1)
-            update_album(id)
-            break
-        elif id_verification.empty:
+            return None
+        while id_verification.empty:
             id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            break
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_album(id)
+        if not id_verification.empty:
+            menus.clear_console(1)
+            if update_album(id) == 0:
+                return None
+            menus.clear_console(1)
+            if menu_continue() == 2:
+                return None
 
- #TODO       
+#TODO       
 def update_album(id):
     show_album = Records().show_album(id)
 
@@ -35,33 +41,49 @@ def update_album(id):
     while loop:
         if selection == 1:
             new_title = input("Insira o novo titulo para o album\n")
-            #Records().update_album_title(new_title, id) << UPDATE TITULO ALBUM
+            if new_title == "0":
+                menus.clear_console(1)
+                return 0
+            #UPDATE TITULO ALBUM
+            break
         elif selection == 2:
             new_description = input("Insira a nova descrição do album\n")
-            #Records().update_album_title(new_description, id)  << UPDATE DESCRIÇÃO ALBUM
+            if new_description == "0":
+                menus.clear_console(1)
+                return 0
+            #UPDATE DESCRIÇÃO ALBUM
+            break
         elif selection == 0:
-            loop = False
+            menus.clear_console(1)
+            return 0
 
 def select_user_update():
-    print(menus.MENU_ADMIN_USERS_AVAIBLES)
-    users_list = Records().list_users()
-    for x in range(users_list.shape[0]):
-        print(f"{x + 1} - " + users_list.iloc[x]["username"])
-    print(menus.MENU_SPLIT)
-    id = input("Digite o número do usuário que deseja alterar ou 0 para sair\n")
     loop = True
     while loop:
+        print(menus.MENU_ADMIN_USERS_AVAIBLES)
+        users_list = Records().list_users()
+        for x in range(users_list.shape[0]):
+            print(f"{x + 1} - " + users_list.iloc[x]["username"])
+        print(menus.MENU_SPLIT)
+        id = input("Digite o número do usuário que deseja alterar ou 0 para sair\n")
         id_verification = Records().show_user(id)
         if id == "0":
-            loop = False
-            break
-        elif not id_verification.empty:
             menus.clear_console(1)
-            update_user(id)
-            break
-        elif id_verification.empty:
+            return None
+        while id_verification.empty:
             id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            break
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_user(id)
+        if not id_verification.empty:
+            menus.clear_console(1)
+            if update_user(id) == 0:
+                return None
+            menus.clear_console(1)
+            if menu_continue() == 2:
+                return None
+
 
 #TODO
 def update_user(id):
@@ -71,41 +93,62 @@ def update_user(id):
     for x in range(show_user.shape[0]):
         print(show_user.iloc[0])
     print("\n", menus.MENU_ADMIN_CHANGE_RECORDS_USER_OPTIONS)
-    selection = int(input("Digite sua opção\n"))
+    selection = int(input("Digite sua opção, ou aperte 'Enter' para sair\n"))
     loop = True
     while loop:
         if selection == 1:
             new_username = input("Insira o novo username para o usuário\n")
+            if new_username == "":
+                menus.clear_console(1)
+                return 0
             #UPDATE USERNAME USER
+            break
         elif selection == 2:
             new_password = input("Insira a nova senha do usuário\n")
+            if new_password == "":
+                menus.clear_console(1)
+                return 0
             #UPDATE SENHA USER
+            break
         elif selection == 3:
-            new_access_type = input("Insira o novo tipo de acesso do usuário\n")
+            new_access_type = input("Insira o novo tipo de acesso do usuário [0 = Normal, 1 = Admin]\n")
+            while new_access_type != "0" and new_access_type != "1" and new_access_type != "":
+                new_access_type = input("Tipo de acesso inválido, insira novamente [0 = normal, 1 = admin]\n")
+            if new_access_type == "":
+                menus.clear_console(1)
+                return 0
             #UPDATE TIPO DE ACESSO USER
+            break
         elif selection == 0:
-            loop = False
+            menus.clear_console(1)
+            return 0
 
 def select_card_update():
-    print(menus.MENU_ADMIN_CARDS_AVAIBLES)
-    cards_list = Records().list_cards()
-    for x in range(cards_list.shape[0]):
-        print(f"{x + 1} - " + cards_list.iloc[x]["name"])
-    print(menus.MENU_SPLIT)
-    id = input("Digite o número da carta que deseja alterar ou 0 para sair\n")
     loop = True
     while loop:
+        print(menus.MENU_ADMIN_CARDS_AVAIBLES)
+        cards_list = Records().list_cards()
+        for x in range(cards_list.shape[0]):
+            print(f"{x + 1} - " + cards_list.iloc[x]["name"])
+        print(menus.MENU_SPLIT)
+        id = input("Digite o número da carta que deseja alterar ou 0 para sair\n")
         id_verification = Records().show_card(id)
         if id == "0":
-            loop = False
-            break
-        elif not id_verification.empty:
             menus.clear_console(1)
-            update_card(id)
-            break
-        elif id_verification.empty:
+            return None
+        while id_verification.empty:
             id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            break
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_card(id)
+        if not id_verification.empty:
+            menus.clear_console(1)
+            if update_card(id) == 0:
+                return None
+            menus.clear_console(1)
+            if menu_continue() == 2:
+                return None
 
 #TODO
 def update_card(id):
@@ -120,33 +163,48 @@ def update_card(id):
     while loop:
         if selection == 1:
             new_image = input("Insira a nova imagem da carta\n")
+            if new_image == "0":
+                menus.clear_console(1)
+                return 0
             #UPDATE IMAGE CARD
+            break
         elif selection == 2:
             new_name = input("Insira o novo nome da carta\n")
+            if new_name == "0":
+                menus.clear_console(1)
+                return 0
             #UPDATE NAME CARD
+            break
         elif selection == 0:
-            loop = False
+            menus.clear_console(1)
+            return 0
 
 def select_border_update():
-    print(menus.MENU_ADMIN_BORDERS_AVAIBLES)
-    border_list = Records().list_borders()
-    for x in range(border_list.shape[0]):
-        print(f"{x + 1} - " + border_list.iloc[x]["name"])
-    print(menus.MENU_SPLIT)
-    id = input("Digite o número da borda que deseja alterar ou 0 para sair\n")
     loop = True
     while loop:
+        print(menus.MENU_ADMIN_BORDERS_AVAIBLES)
+        border_list = Records().list_borders()
+        for x in range(border_list.shape[0]):
+            print(f"{x + 1} - " + border_list.iloc[x]["name"])
+        print(menus.MENU_SPLIT)
+        id = input("Digite o número da borda que deseja alterar ou 0 para sair\n")
         id_verification = Records().show_border(id)
         if id == "0":
-            loop = False
-            break
-        elif not id_verification.empty:
             menus.clear_console(1)
-            update_border(id)
-            break
-        elif id_verification.empty:
+            return None
+        while id_verification.empty:
             id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            break
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_border(id)
+        if not id_verification.empty:
+            menus.clear_console(1)
+            if update_border(id) == 0:
+                return None
+            menus.clear_console(1)
+            if menu_continue() == 2:
+                return None
 
 #TODO
 def update_border(id):
@@ -161,12 +219,21 @@ def update_border(id):
     while loop:
         if selection == 1:
             new_image = input("Insira a nova imagem da borda\n")
+            if new_image == "0":
+                menus.clear_console(1)
+                return 0
             #UPDATE IMAGE CARD
+            break
         elif selection == 2:
             new_name = input("Insira o novo nome da borda\n")
+            if new_name == "0":
+                menus.clear_console(1)
+                return 0
             #UPDATE NAME CARD
+            break
         elif selection == 0:
-            loop = False
+            menus.clear_console(1)
+            return 0
 
 def select_background_update():
     print(menus.MENU_ADMIN_BACKGROUND_AVAIBLES)
@@ -179,15 +246,21 @@ def select_background_update():
     while loop:
         id_verification = Records().show_background(id)
         if id == "0":
-            loop = False
-            break
-        elif not id_verification.empty:
             menus.clear_console(1)
-            update_background(id)
-            break
-        elif id_verification.empty:
+            return None
+        while id_verification.empty:
             id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            break
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_background(id)
+        if not id_verification.empty:
+            menus.clear_console(1)
+            if update_background(id) == 0:
+                return None
+            menus.clear_console(1)
+            if menu_continue() == 2:
+                return None
 
 #TODO
 def update_background(id):
@@ -202,33 +275,48 @@ def update_background(id):
     while loop:
         if selection == 1:
             new_image = input("Insira a nova imagem do background\n")
+            if new_image == "0":
+                menus.clear_console(1)
+                return 0
             #UPDATE IMAGE BACKGROUND
+            break
         elif selection == 2:
             new_name = input("Insira o novo nome do background\n")
+            if new_name == "0":
+                menus.clear_console(1)
+                return 0
             #UPDATE NAME BACKGROUND
+            break
         elif selection == 0:
-            loop = False
+            menus.clear_console(1)
+            return 0
 
 def select_tag_update():
-    print(menus.MENU_ADMIN_TAG_AVAIBLES)
-    tag_list = Records().list_tags()
-    for x in range(tag_list.shape[0]):
-        print(f"{x + 1} - " + tag_list.iloc[x]["name"])
-    print(menus.MENU_SPLIT)
-    id = input("Digite o número da tag que deseja alterar ou 0 para sair\n")
     loop = True
     while loop:
+        print(menus.MENU_ADMIN_TAG_AVAIBLES)
+        tag_list = Records().list_tags()
+        for x in range(tag_list.shape[0]):
+            print(f"{x + 1} - " + tag_list.iloc[x]["name"])
+        print(menus.MENU_SPLIT)
+        id = input("Digite o número da tag que deseja alterar ou 0 para sair\n")
         id_verification = Records().show_tag(id)
         if id == "0":
-            loop = False
-            break
-        elif not id_verification.empty:
             menus.clear_console(1)
-            update_tag(id)
-            break
-        elif id_verification.empty:
+            return None
+        while id_verification.empty:
             id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            break
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_tag(id)
+        if not id_verification.empty:
+            menus.clear_console(1)
+            if update_tag(id) == 0:
+                return None
+            menus.clear_console(1)
+            if menu_continue() == 2:
+                return None
 
 #TODO
 def update_tag(id):
@@ -243,30 +331,41 @@ def update_tag(id):
     while loop:
         if selection == 1:
             new_name = input("Insira o novo nome da tag\n")
+            if new_name == "0":
+                menus.clear_console(1)
+                return 0
             #UPDATE NAME TAG
+            break
         elif selection == 0:
-            loop = False
+            menus.clear_console(1)
+            return 0
 
 def select_rarity_update():
-    print(menus.MENU_ADMIN_RARITY_AVAIBLES)
-    rarity_list = Records().list_rarity()
-    for x in range(rarity_list.shape[0]):
-        print(f"{x + 1} - " + rarity_list.iloc[x]["name"])
-    print(menus.MENU_SPLIT)
-    id = input("Digite o número da raridade que deseja alterar ou 0 para sair\n")
     loop = True
     while loop:
+        print(menus.MENU_ADMIN_RARITY_AVAIBLES)
+        rarity_list = Records().list_rarity()
+        for x in range(rarity_list.shape[0]):
+            print(f"{x + 1} - " + rarity_list.iloc[x]["name"])
+        print(menus.MENU_SPLIT)
+        id = input("Digite o número da raridade que deseja alterar ou 0 para sair\n")
         id_verification = Records().show_rarity(id)
         if id == "0":
-            loop = False
-            break
-        elif not id_verification.empty:
             menus.clear_console(1)
-            update_rarity(id)
-            break
-        elif id_verification.empty:
+            return None
+        while id_verification.empty:
             id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            break
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_rarity(id)
+        if not id_verification.empty:
+            menus.clear_console(1)
+            if update_rarity(id) == 0:
+                return None
+            menus.clear_console(1)
+            if menu_continue() == 2:
+                return None
 
 #TODO
 def update_rarity(id):
@@ -281,91 +380,27 @@ def update_rarity(id):
     while loop:
         if selection == 1:
             new_name = input("Insira o novo nome da raridade\n")
+            if new_name == "0":
+                menus.clear_console(1)
+                return 0
             #UPDATE NAME RARITY
+            break
         if selection == 2:
-            new_name = input("Insira o novo tier da raridade\n")
+            new_tier = input("Insira o novo tier da raridade\n")
+            if new_tier == "0":
+                menus.clear_console(1)
+                return 0
             #UPDATE TIER RARITY
-        elif selection == 0:
-            loop = False
-
-def select_border_tag_update():
-    print(menus.MENU_ADMIN_BORDER_TAG_AVAIBLES)
-    border_tag_list = Records().list_border_tag()
-    for x in range(border_tag_list.shape[0]):
-        print(f"{x + 1} - " + border_tag_list.iloc[x]["name"])
-    print(menus.MENU_SPLIT)
-    id = input("Digite o número da border tag que deseja alterar ou 0 para sair\n")
-    loop = True
-    while loop:
-        id_verification = Records().show_border_tag(id)
-        if id == "0":
-            loop = False
             break
-        elif not id_verification.empty:
+        elif selection == 0:
             menus.clear_console(1)
-            update_border_tag(id)
-            break
-        elif id_verification.empty:
-            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            break
+            return 0
 
-#TODO
-def update_border_tag(id):
-    show_border_tag = Records().show_border_tag(id)
-
-    print("As informações da border tag disponíveis para alteração são:\n")
-    for x in range(show_border_tag.shape[0]):
-        print(show_border_tag.iloc[0])
-    print("\n", menus.MENU_ADMIN_CHANGE_RECORDS_BORDER_TAG_OPTIONS)
-    selection = int(input("Digite sua opção\n"))
-    loop = True
-    while loop:
-        if selection == 1:
-            new_name = input("Insira a nova tag id\n")
-            #UPDATE TAG ID BORDERTAG
-        if selection == 2:
-            new_name = input("Insira a nova border id\n")
-            #UPDATE BORDER ID BORDERTAG
-        elif selection == 0:
-            loop = False
-
-def select_card_tag_update():
-    print(menus.MENU_ADMIN_CARD_TAG_AVAIBLES)
-    card_tag_list = Records().list_card_tag()
-    for x in range(card_tag_list.shape[0]):
-        print(f"{x + 1} - " + card_tag_list.iloc[x])
-    print(menus.MENU_SPLIT)
-    id = input("Digite o número da card tag que deseja alterar ou 0 para sair\n")
-    loop = True
-    while loop:
-        id_verification = Records().show_card_tag(id)
-        if id == "0":
-            loop = False
-            break
-        elif not id_verification.empty:
-            menus.clear_console(1)
-            update_card_tag(id)
-            break
-        elif id_verification.empty:
-            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            break
-
-#TODO
-def update_card_tag(id):
-    show_card_tag = Records().show_card_tag(id)
-
-    print("As informações da card tag disponíveis para alteração são:\n")
-    for x in range(show_card_tag.shape[0]):
-        print(show_card_tag.iloc[0])
-    print("\n", menus.MENU_ADMIN_CHANGE_RECORDS_CARD_TAG_OPTIONS)
-    selection = int(input("Digite sua opção\n"))
-    loop = True
-    while loop:
-        if selection == 1:
-            new_name = input("Insira a nova tag id\n")
-            #UPDATE TAG ID CARDTAG
-        if selection == 2:
-            new_name = input("Insira a nova card id\n")
-            #UPDATE CARD ID CARDRTAG
-        elif selection == 0:
-            loop = False
+def menu_continue():
+    menus.clear_console(1)
+    print(menus.MENU_ADMIN_UPDATE_RECORDS_CONTINUE)
+    selection = str(input("Insira sua opção\n"))
+    if selection == "2":
+        menus.clear_console(1)
+        return 2
+    menus.clear_console(1)

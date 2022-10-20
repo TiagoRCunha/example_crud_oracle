@@ -106,6 +106,34 @@ MENU_ADMIN_CHANGE_RECORDS_CARD_TAG_OPTIONS= """
 ========================================
 """
 
+MENU_ADMIN_CREATE_RECORDS_CONTINUE= """
+==== Deseja Inserir Mais Registros? ====
+[1] - Sim
+[2] - Não
+========================================
+"""
+
+MENU_ADMIN_DELETE_RECORDS_CONTINUE= """
+==== Deseja Deletar Mais Registros? ====
+[1] - Sim
+[2] - Não
+========================================
+"""
+
+MENU_ADMIN_UPDATE_RECORDS_CONTINUE= """
+==== Deseja Alterar Mais Registros? ====
+[1] - Sim
+[2] - Não
+========================================
+"""
+
+MENU_ADMIN_COMFIRM_RECORDS= """
+====== Você Confirma a Operação? =======
+[1] - Confirmar
+[2] - Cancelar
+========================================
+"""
+
 MENU_ADMIN_CHANGE_RECORDS = """
 =========== Alterar Registros ==========
 """
@@ -127,31 +155,39 @@ MENU_ADMIN_BORDERS_AVAIBLES = """
 """
 
 MENU_ADMIN_BACKGROUND_AVAIBLES = """
-========== Background Disponíveis ==========
+======== Background Disponíveis ========
 """
 
 MENU_ADMIN_TAG_AVAIBLES = """
-============= Tags Disponíveis =============
+=========== Tags Disponíveis ===========
 """
 
 MENU_ADMIN_RARITY_AVAIBLES = """
-========== Raridades Disponíveis ===========
+======== Raridades Disponíveis =========
 """
 
 MENU_ADMIN_BORDER_TAG_AVAIBLES = """
-========== Border Tag Disponíveis ===========
+======== Border Tag Disponíveis ========
 """
 
 MENU_ADMIN_CARD_TAG_AVAIBLES = """
-=========== Card Tag Disponíveis ============
+========= Card Tag Disponíveis =========
+"""
+
+MENU_ADMIN_BACKGROUND_TAG_AVAIBLES = """
+===== Background Tag Disponíveis =======
+"""
+
+MENU_ADMIN_USER_CARD_AVAIBLES = """
+========= User Card Disponíveis =========
 """
 
 MENU_ADMIN_CREATE_RECORDS = """
-============== Criar Registros ==============
+============ Criar Registros ============
 """
 
 MENU_ADMIN_DELETE_RECORDS = """
-============= Deletar Registros =============
+=========== Deletar Registros ===========
 """
 
 
