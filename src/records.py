@@ -130,10 +130,10 @@ class Records:
         oracle.connect()
         return(oracle.sqlToDataFrame("select border_id, tag_id from labdatabase.\"border_tag\""))
 
-    def show_border_tag(self, id):
+    def show_border_tag(self, border_id, tag_id):
         oracle = OracleQueries()
         oracle.connect()
-        return(oracle.sqlToDataFrame(f"select border_id, tag_id from labdatabase.\"border_tag\" where id = '{id}'"))
+        return(oracle.sqlToDataFrame(f"select border_id, tag_id from labdatabase.\"border_tag\" where border_id = '{border_id}' and tag_id = '{tag_id}'"))
 
     def total_card_tag(self) -> int:
         oracle = OracleQueries()
@@ -149,6 +149,37 @@ class Records:
         oracle = OracleQueries()
         oracle.connect()
         return(oracle.sqlToDataFrame(f"select card_id, tag_id from labdatabase.\"card_tag\" where card_id = '{card_id}' and tag_id = '{tag_id}"))
+
+    def total_background_tag(self) -> int:
+        oracle = OracleQueries()
+        oracle.connect()
+        return int(oracle.sqlToDataFrame("select count(*) from labdatabase.\"background_tag\"").iloc[0])
+
+    def list_background_tag(self):
+        oracle = OracleQueries()
+        oracle.connect()
+        return(oracle.sqlToDataFrame("select background_id, tag_id from labdatabase.\"background_tag\""))
+
+    def show_background_tag(self, background_id, tag_id):
+        oracle = OracleQueries()
+        oracle.connect()
+        return(oracle.sqlToDataFrame(f"select background_id, tag_id from labdatabase.\"background_tag\" where card_id = '{background_id}' and tag_id = '{tag_id}"))
+
+    def total_user_card(self) -> int:
+        oracle = OracleQueries()
+        oracle.connect()
+        return int(oracle.sqlToDataFrame("select count(*) from labdatabase.\"user_card\"").iloc[0])
+
+    def list_user_card(self):
+        oracle = OracleQueries()
+        oracle.connect()
+        return(oracle.sqlToDataFrame("select user_id, card_id from labdatabase.\"user_card\""))
+
+    def show_user_card(self, user_id, card_id):
+        oracle = OracleQueries()
+        oracle.connect()
+        return(oracle.sqlToDataFrame(f"select user_id, card_id from labdatabase.\"user_card\" where card_id = '{user_id}' and tag_id = '{card_id}"))
+
 
     def get_init(self):
         return f"""
