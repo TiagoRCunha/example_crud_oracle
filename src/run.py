@@ -16,7 +16,7 @@ def run():
                         menus.clear_console(1)
                         login()
 
-                elif selection == 2:
+                elif selection == 0:
                         print("Obrigado e volte sempre!")
                         menus.clear_console(1)
                         loop = False
