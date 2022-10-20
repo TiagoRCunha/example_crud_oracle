@@ -73,27 +73,27 @@ def admin_access_reports():
                 if selection == 1:
                         #Relatórios de album
                         break
-                if selection == 2:
+                elif selection == 2:
                         #Relatórios de cartas
                         break
-                if selection == 3:
+                elif selection == 3:
                         #Relatórios de usuários
                         break
-                if selection == 0:
+                elif selection == 0:
                         loop = False
                         break
 
 def admin_access_change_records():
         loop = True
-        print(menus.MENU_ADMIN_CHANGE_RECORDS)
-        print("As tabelas disponiveis para modificação são:\n")
-        table_list = menus.search_tables()
-        for x in range(table_list.shape[0]):
-                print(f"{x + 1} - " + table_list.iloc[x]["table_name"])
-        print(menus.MENU_SPLIT)
-        selection = int(input("Digite o nome da tabela que deseja modificar, insira 0 para sair\n"))
-        menus.clear_console(1)
         while loop:
+                print(menus.MENU_ADMIN_CHANGE_RECORDS)
+                print("As tabelas disponiveis para modificação são:\n")
+                table_list = menus.search_tables()
+                for x in range(table_list.shape[0]):
+                        print(f"{x + 1} - " + table_list.iloc[x]["table_name"])
+                print(menus.MENU_SPLIT)
+                selection = int(input("Digite o nome da tabela que deseja modificar, insira 0 para sair\n"))
+                menus.clear_console(1)
                 if selection == 1:
                         update_records.select_album_update()
                 elif selection == 2:
@@ -117,29 +117,29 @@ def admin_access_change_records():
 
 def admin_access_create_records():
         loop = True
-        print(menus.MENU_ADMIN_CREATE_RECORDS)
-        print("As tabelas disponiveis para inserção de valores são:\n")
-        table_list = menus.search_tables()
-        for x in range(table_list.shape[0]):
-                print(f"{x + 1} - " + table_list.iloc[x]["table_name"])
-        print(menus.MENU_SPLIT)
-        selection = int(input("Digite o nome da tabela que deseja inserir um valor, insira 0 para sair\n"))
-        menus.clear_console(1)
         while loop:
+                print(menus.MENU_ADMIN_CREATE_RECORDS)
+                print("As tabelas disponiveis para inserção de valores são:\n")
+                table_list = menus.search_tables()
+                for x in range(table_list.shape[0]):
+                        print(f"{x + 1} - " + table_list.iloc[x]["table_name"])
+                print(menus.MENU_SPLIT)
+                selection = int(input("Digite o nome da tabela que deseja inserir um valor, insira 0 para sair\n"))
+                menus.clear_console(1)
                 if selection == 0:
                         loop = False
                         
 def admin_access_delete_records():
         loop = True
-        print(menus.MENU_ADMIN_DELETE_RECORDS)
-        print("As tabelas disponiveis para remoção de valores são:\n")
-        table_list = menus.search_tables()
-        for x in range(table_list.shape[0]):
-                print(f"{x + 1} - " + table_list.iloc[x]["table_name"])
-        print(menus.MENU_SPLIT)
-        selection = int(input("Digite o nome da tabela que deseja remover um valor, insira 0 para sair\n"))
-        menus.clear_console(1)
         while loop:
+                print(menus.MENU_ADMIN_DELETE_RECORDS)
+                print("As tabelas disponiveis para remoção de valores são:\n")
+                table_list = menus.search_tables()
+                for x in range(table_list.shape[0]):
+                        print(f"{x + 1} - " + table_list.iloc[x]["table_name"])
+                print(menus.MENU_SPLIT)
+                selection = int(input("Digite o nome da tabela que deseja remover um valor, insira 0 para sair\n"))
+                menus.clear_console(1)
                 if selection == 0:
                         loop = False
         
