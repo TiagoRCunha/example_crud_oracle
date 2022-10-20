@@ -18,6 +18,9 @@ def test_rarity():
     print("Report")
     controller.list_table()
 
+    print("\nGet By Id")
+    controller.get_by_id(100)
+
     print("\nUpdate SQL")
     print(controller._generate_update_sql(1, "Testing", 2))
 
