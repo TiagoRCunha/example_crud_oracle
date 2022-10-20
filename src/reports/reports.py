@@ -2,9 +2,9 @@ from conexion.oracle_queries import OracleQueries
 
 class Relatorio:
     def __init__(self):
-        with open("./views/user_available_cards_select.sql") as f:
+        with open("./sql/user_available_cards_select.sql") as f:
             self.query_user_cards_available = f.read()
-        with open("./views/user_list_own_card_select.sql") as f:
+        with open("./sql/user_list_own_card_select.sql") as f:
             self.query_user_list_own_card_select = f.read()
 
         self.txt = "Pressione Enter para sair"

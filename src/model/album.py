@@ -1,3 +1,4 @@
+from conexion.oracle_queries import OracleQueries
 class Album:
     def __init__(self, 
                  id:int=None,
@@ -11,6 +12,8 @@ class Album:
         self.set_card_count(card_count)
         self.set_page_number(page_number)
         self.set_description(description)
+        with open("./sql/insert_card.sql") as f:
+            self.query_insert_card = f.read()
 
     def set_title(self, title:str):
         self.title = title
@@ -41,3 +44,8 @@ class Album:
 
     def to_string(self) -> str:
         return f"título: {self.get_title()} | Número de cartas: {self.get_card_count()} | Número de páginas: {self.get_page_number()} | \nDescrição: {self.get_description()}\n"
+    
+    def persist(self):
+        oracle = OracleQueries(can_write=True)
+        oracle.connect()
+        return oracle.write(self.query_insert_card, [self.title, self.card_count, self.page_number, self.description])

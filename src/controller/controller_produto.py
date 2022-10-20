@@ -75,7 +75,7 @@ class Controller_Produto:
         codigo_produto = int(input("Código do Produto que irá excluir: "))        
 
         # Verifica se o produto existe na base de dados
-        if not self.verifica_existencia_produto(oracle, codigo_produto):            
+        if not self.verifica_existencia_produto(oracle, codigo_produto):
             # Recupera os dados do novo produto criado transformando em um DataFrame
             df_produto = oracle.sqlToDataFrame(f"select codigo_produto, descricao_produto from produtos where codigo_produto = {codigo_produto}")
             # Revome o produto da tabela

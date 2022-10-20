@@ -4,7 +4,20 @@ class Records:
 
     def __init__(self):
         self.created_by = "Henrique Klayton, Tiago Rodrigues e Victor Binda"
+        self.oracle = OracleQueries()
 
+    def select_admin_album_view(self):
+        self.oracle.connect()
+        return self.oracle.sqlToDataFrame("select * from admin_album_view")
+    
+    def select_admin_card_view(self):
+        self.oracle.connect()
+        return self.oracle.sqlToDataFrame("select * from admin_card_view")
+
+    def select_admin_users_view(self):
+        self.oracle.connect()
+        return self.oracle.sqlToDataFrame("select * from admin_users_view")
+    
     def total_albuns(self) -> int:
         oracle = OracleQueries()
         oracle.connect()
@@ -19,16 +32,6 @@ class Records:
         oracle = OracleQueries()
         oracle.connect()
         return(oracle.sqlToDataFrame(f"select title, \"description\" from labdatabase.\"album\" where id = '{id}'"))
-
-    # def update_album_title(self, new_title, id):
-    #     oracle = OracleQueries()
-    #     oracle.connect()
-    #     return(oracle.write("update \"album\" set title = :1 where title = :2", [new_title, id]))
-
-    # def update_album_description(self, new_description, id):
-    #     oracle = OracleQueries()
-    #     oracle.connect()
-    #     return(oracle.write("update \"album\" set \"description\" = ':1' where title = :2", [new_description, id]))
 
     def total_users(self) -> int:
         oracle = OracleQueries()
