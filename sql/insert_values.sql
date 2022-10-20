@@ -42,15 +42,15 @@ INSERT INTO LABDATABASE."border" (id, "image", "name", rarity_id) VALUES(border_
 
 
 SELECT id INTO ID_SEARCH FROM labdatabase."rarity" WHERE "name" = 'common';
-INSERT INTO LABDATABASE."background" (id, "image", "name", rarity_id) VALUES(background_id_seq.NEXTVAL, 'background_normal.pnf', 'Normal Background', ID_SEARCH);
+INSERT INTO LABDATABASE."background" (id, "image", "name", rarity_id) VALUES(background_id_seq.NEXTVAL, 'background_normal.png', 'Normal Background', ID_SEARCH);
 SELECT id INTO ID_SEARCH FROM labdatabase."rarity" WHERE "name" = 'uncommon';
-INSERT INTO LABDATABASE."background" (id, "image", "name", rarity_id) VALUES(background_id_seq.NEXTVAL, 'background_matte.pnf', 'Matte Background', ID_SEARCH);
+INSERT INTO LABDATABASE."background" (id, "image", "name", rarity_id) VALUES(background_id_seq.NEXTVAL, 'background_matte.png', 'Matte Background', ID_SEARCH);
 SELECT id INTO ID_SEARCH FROM labdatabase."rarity" WHERE "name" = 'rare';
-INSERT INTO LABDATABASE."background" (id, "image", "name", rarity_id) VALUES(background_id_seq.NEXTVAL, 'background_transparent.pnf', 'Transparent Background', ID_SEARCH);
+INSERT INTO LABDATABASE."background" (id, "image", "name", rarity_id) VALUES(background_id_seq.NEXTVAL, 'background_transparent.png', 'Transparent Background', ID_SEARCH);
 SELECT id INTO ID_SEARCH FROM labdatabase."rarity" WHERE "name" = 'epic';
-INSERT INTO LABDATABASE."background" (id, "image", "name", rarity_id) VALUES(background_id_seq.NEXTVAL, 'background_reflective.pnf', 'Reflective Background', ID_SEARCH);
+INSERT INTO LABDATABASE."background" (id, "image", "name", rarity_id) VALUES(background_id_seq.NEXTVAL, 'background_reflective.png', 'Reflective Background', ID_SEARCH);
 SELECT id INTO ID_SEARCH FROM labdatabase."rarity" WHERE "name" = 'legendary';
-INSERT INTO LABDATABASE."background" (id, "image", "name", rarity_id) VALUES(background_id_seq.NEXTVAL, 'background_metallic.pnf', 'Metallic Background', ID_SEARCH);
+INSERT INTO LABDATABASE."background" (id, "image", "name", rarity_id) VALUES(background_id_seq.NEXTVAL, 'background_metallic.png', 'Metallic Background', ID_SEARCH);
 
 
 SELECT id INTO BACKGROUND_ID_SEARCH FROM labdatabase."background" WHERE "name" = 'Reflective Background';
