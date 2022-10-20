@@ -1,5 +1,5 @@
-import config
-from records import Records
+import utils.config as config
+from utils.records import Records
 
 def create_album():
     loop = True
