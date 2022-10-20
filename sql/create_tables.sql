@@ -129,9 +129,9 @@ CREATE TABLE labdatabase."border_tag" (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT border_tag_pk PRIMARY KEY ( border_id , tag_id ),
     CONSTRAINT border_tag_border_id_fk FOREIGN KEY ( border_id )
-    REFERENCES labdatabase."border" (id) NOT DEFERRABLE,
+    REFERENCES labdatabase."border" (id) ON DELETE CASCADE,
     CONSTRAINT border_tag_tag_id_fk FOREIGN KEY ( tag_id )
-    REFERENCES labdatabase."tag" (id) NOT DEFERRABLE
+    REFERENCES labdatabase."tag" (id) ON DELETE CASCADE
 );
 
 CREATE TABLE labdatabase."card_tag" (
@@ -141,9 +141,9 @@ CREATE TABLE labdatabase."card_tag" (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT card_tag_pk PRIMARY KEY ( card_id, tag_id ),
     CONSTRAINT card_tag_card_id_fk FOREIGN KEY ( card_id )
-    REFERENCES labdatabase."card" (id) NOT DEFERRABLE,
+    REFERENCES labdatabase."card" (id) ON DELETE CASCADE,
     CONSTRAINT card_tag_tag_id_fk FOREIGN KEY ( tag_id )
-    REFERENCES labdatabase."tag" (id) NOT DEFERRABLE
+    REFERENCES labdatabase."tag" (id) ON DELETE CASCADE
 );
 
 CREATE TABLE labdatabase."background_tag" (
@@ -153,9 +153,9 @@ CREATE TABLE labdatabase."background_tag" (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT background_tag_pk PRIMARY KEY ( background_id, tag_id ),
     CONSTRAINT background_tag_background_id_fk FOREIGN KEY ( background_id )
-    REFERENCES labdatabase."background" (id) NOT DEFERRABLE,
+    REFERENCES labdatabase."background" (id) ON DELETE CASCADE,
     CONSTRAINT background_tag_tag_id_fk FOREIGN KEY ( tag_id )
-    REFERENCES labdatabase."tag" (id) NOT DEFERRABLE
+    REFERENCES labdatabase."tag" (id) ON DELETE CASCADE
 );
 
 CREATE TABLE labdatabase."user_card" (
@@ -165,14 +165,14 @@ CREATE TABLE labdatabase."user_card" (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT card_user_pk PRIMARY KEY ( card_id, user_id ),
     CONSTRAINT user_card_card_id_fk FOREIGN KEY ( card_id )
-    REFERENCES labdatabase."card" (id) NOT DEFERRABLE,
+    REFERENCES labdatabase."card" (id) ON DELETE CASCADE,
     CONSTRAINT user_card_user_id_fk FOREIGN KEY ( user_id )
-    REFERENCES labdatabase."user" (id) NOT DEFERRABLE
+    REFERENCES labdatabase."user" (id) ON DELETE CASCADE
 );
 
-ALTER TABLE labdatabase."user" ADD album_id NUMBER NOT NULL;
+ALTER TABLE labdatabase."user" ADD album_id NUMBER DEFAULT NULL;
 ALTER TABLE labdatabase."user" ADD CONSTRAINT user_album_id_fk
-    FOREIGN KEY ( album_id ) REFERENCES labdatabase."album" (id);
+    FOREIGN KEY ( album_id ) REFERENCES labdatabase."album" (id) ON DELETE SET NULL;
 
 ALTER TABLE labdatabase."card" ADD (
     background_id NUMBER,
@@ -181,18 +181,18 @@ ALTER TABLE labdatabase."card" ADD (
     album_id NUMBER
 );
 ALTER TABLE labdatabase."card" ADD CONSTRAINT card_background_id_fk
-    FOREIGN KEY ( background_id ) REFERENCES labdatabase."background" (id) NOT DEFERRABLE;
+    FOREIGN KEY ( background_id ) REFERENCES labdatabase."background" (id) ON DELETE CASCADE;
 ALTER TABLE labdatabase."card" ADD CONSTRAINT card_border_id_fk
-    FOREIGN KEY ( border_id ) REFERENCES labdatabase."border" (id) NOT DEFERRABLE;
+    FOREIGN KEY ( border_id ) REFERENCES labdatabase."border" (id) ON DELETE CASCADE;
 ALTER TABLE labdatabase."card" ADD CONSTRAINT card_rarity_id_fk
-    FOREIGN KEY ( rarity_id ) REFERENCES labdatabase."rarity" (id) NOT DEFERRABLE;
+    FOREIGN KEY ( rarity_id ) REFERENCES labdatabase."rarity" (id) ON DELETE CASCADE;
 ALTER TABLE labdatabase."card" ADD CONSTRAINT card_album_id_fk
-    FOREIGN KEY ( album_id ) REFERENCES labdatabase."album" (id) NOT DEFERRABLE;
+    FOREIGN KEY ( album_id ) REFERENCES labdatabase."album" (id) ON DELETE CASCADE;
 
 ALTER TABLE labdatabase."border" ADD rarity_id NUMBER NOT NULL;
 ALTER TABLE labdatabase."border" ADD CONSTRAINT border_rarity_id_fk
-    FOREIGN KEY ( rarity_id ) REFERENCES labdatabase."rarity" (id) NOT DEFERRABLE;
+    FOREIGN KEY ( rarity_id ) REFERENCES labdatabase."rarity" (id) ON DELETE CASCADE;
 
 ALTER TABLE labdatabase."background" ADD rarity_id NUMBER NOT NULL;
 ALTER TABLE labdatabase."background" ADD CONSTRAINT background_rarity_id_fk
-    FOREIGN KEY ( rarity_id ) REFERENCES labdatabase."rarity" (id) NOT DEFERRABLE;
+    FOREIGN KEY ( rarity_id ) REFERENCES labdatabase."rarity" (id) ON DELETE CASCADE;
