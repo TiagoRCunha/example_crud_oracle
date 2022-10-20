@@ -1,7 +1,7 @@
 from typing import Optional
 from conexion.oracle_queries import OracleQueries
 from model.tag import Tag
-from reports.relatorios import Relatorio
+from reports.reports import Relatorio
 
 
 class TagController:

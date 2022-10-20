@@ -1,7 +1,7 @@
 from typing import Any, List, Optional, Tuple
 from conexion.oracle_queries import OracleQueries
 from model.rarity import Rarity
-from reports.relatorios import Relatorio
+from reports.reports import Relatorio
 
 
 class RarityController:

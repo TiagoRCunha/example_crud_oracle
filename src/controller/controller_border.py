@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from conexion.oracle_queries import OracleQueries
 from controller.controller_rarity import RarityController
 from model.border import Border
-from reports.relatorios import Relatorio
+from reports.reports import Relatorio
 
 
 class BorderController:
