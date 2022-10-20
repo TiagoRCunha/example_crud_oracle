@@ -6,7 +6,7 @@ MENU_SPLIT = """
 MENU_INICIAL = """
 ============= Menu Inicial =============
 [1] - Realizar Login
-[2] - Sair
+[0] - Sair
 ========================================
 """
 
@@ -21,7 +21,7 @@ MENU_ADMIN = """
 [2] - Alterar Registros
 [3] - Criar Registros
 [4] - Deletar Registros
-[5] - Sair
+[0] - Sair
 ========================================
 """
 
@@ -30,7 +30,7 @@ MENU_ADMIN_REPORTS = """
 [1] - Ver Relatórios de Album
 [2] - Ver Relatórios de Cartas
 [3] - Ver Relatórios de Usuários
-[4] - Sair
+[0] - Sair
 ========================================
 """
 

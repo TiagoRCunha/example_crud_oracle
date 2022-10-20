@@ -43,6 +43,7 @@ def login():
                         menus.clear_console(1)
                         admin_access()
                 else:
+                        menus.clear_console(1)
                         print("Usuário ou senha incorretos, por favor tente novamente")
 
 def admin_access():
@@ -59,7 +60,7 @@ def admin_access():
                         admin_access_create_records()
                 elif selection == 4:
                         admin_access_delete_records()
-                elif selection == 5:
+                elif selection == 0:
                         loop = False
                         break
 
@@ -78,7 +79,7 @@ def admin_access_reports():
                 if selection == 3:
                         #Relatórios de usuários
                         break
-                if selection == 4:
+                if selection == 0:
                         loop = False
                         break
 
