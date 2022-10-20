@@ -120,6 +120,13 @@ MENU_ADMIN_DELETE_RECORDS_CONTINUE= """
 ========================================
 """
 
+MENU_ADMIN_UPDATE_RECORDS_CONTINUE= """
+==== Deseja Alterar Mais Registros? ====
+[1] - Sim
+[2] - Não
+========================================
+"""
+
 MENU_ADMIN_COMFIRM_RECORDS= """
 ====== Você Confirma a Operação? =======
 [1] - Confirmar

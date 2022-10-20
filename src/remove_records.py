@@ -11,13 +11,16 @@ def remove_album():
         print(menus.MENU_SPLIT)
         id = input("Digite o número do album que deseja remover ou 0 para sair\n")
         id_verification = Records().show_album(id)
-        while id_verification.empty:
-            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            id_verification = Records().show_album(id)
         if id == "0":
             menus.clear_console(1)
             return None
-        elif not id_verification.empty:
+        while id_verification.empty:
+            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_album(id)
+        if not id_verification.empty:
             if menu_confirm() == 1:
                 #REMOVER ALBUM
                 menus.clear_console(1)
@@ -35,13 +38,16 @@ def remove_user():
         print(menus.MENU_SPLIT)
         id = input("Digite o número do usuário que deseja remover ou 0 para sair\n")
         id_verification = Records().show_user(id)
-        while id_verification.empty:
-            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            id_verification = Records().show_user(id)
         if id == "0":
             menus.clear_console(1)
             return None
-        elif not id_verification.empty:
+        while id_verification.empty:
+            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_user(id)
+        if not id_verification.empty:
             if menu_confirm() == 1:
                 #REMOVER USUARIO
                 menus.clear_console(1)
@@ -59,13 +65,16 @@ def remove_card():
         print(menus.MENU_SPLIT)
         id = input("Digite o número da carta que deseja alterar ou 0 para sair\n")
         id_verification = Records().show_card(id)
-        while id_verification.empty:
-            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            id_verification = Records().show_card(id)
         if id == "0":
             menus.clear_console(1)
             return None
-        elif not id_verification.empty:
+        while id_verification.empty:
+            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_card(id)
+        if not id_verification.empty:
             if menu_confirm() == 1:
                 #REMOVER CARTA
                 menus.clear_console(1)
@@ -82,13 +91,16 @@ def remove_border():
         print(menus.MENU_SPLIT)
         id = input("Digite o número da borda que deseja alterar ou 0 para sair\n")
         id_verification = Records().show_border(id)
-        while id_verification.empty:
-            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            id_verification = Records().show_border(id)
         if id == "0":
             menus.clear_console(1)
             return None
-        elif not id_verification.empty:
+        while id_verification.empty:
+            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_border(id)
+        if not id_verification.empty:
             if menu_confirm() == 1:
                 #REMOVER BORDA
                 menus.clear_console(1)
@@ -105,13 +117,16 @@ def remove_background():
         print(menus.MENU_SPLIT)
         id = input("Digite o número do background que deseja alterar ou 0 para sair\n")
         id_verification = Records().show_background(id)
-        while id_verification.empty:
-            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            id_verification = Records().show_background(id)
         if id == "0":
             menus.clear_console(1)
             return None
-        elif not id_verification.empty:
+        while id_verification.empty:
+            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_background(id)
+        if not id_verification.empty:
             if menu_confirm() == 1:
                 #REMOVER BACKGROUND
                 menus.clear_console(1)
@@ -128,13 +143,16 @@ def remove_tag():
         print(menus.MENU_SPLIT)
         id = input("Digite o número da tag que deseja alterar ou 0 para sair\n")
         id_verification = Records().show_tag(id)
-        while id_verification.empty:
-            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            id_verification = Records().show_tag(id)
         if id == "0":
             menus.clear_console(1)
             return None
-        elif not id_verification.empty:
+        while id_verification.empty:
+            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_tag(id)
+        if not id_verification.empty:
             if menu_confirm() == 1:
                 #REMOVER TAG
                 menus.clear_console(1)
@@ -151,13 +169,16 @@ def remove_rarity():
         print(menus.MENU_SPLIT)
         id = input("Digite o número da raridade que deseja alterar ou 0 para sair\n")
         id_verification = Records().show_rarity(id)
-        while id_verification.empty:
-            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
-            id_verification = Records().show_rarity(id)
         if id == "0":
             menus.clear_console(1)
             return None
-        elif not id_verification.empty:
+        while id_verification.empty:
+            id = input("\nOpção inválida, digite novamente ou 0 para sair\n")
+            if id == "0":
+                menus.clear_console(1)
+                return None
+            id_verification = Records().show_rarity(id)
+        if not id_verification.empty:
             if menu_confirm() == 1:
                 #REMOVE RARITY
                 menus.clear_console(1)
@@ -170,7 +191,11 @@ def remove_border_tag():
     for x in range(border_tag_list.shape[0]):
         print(f"{x + 1} - ", "Border_Name: ", Records().show_border(str(border_tag_list.iloc[x]["border_id"])).iloc[0]["name"], "| Tag_Name: ", Records().show_tag(str(border_tag_list.iloc[x]["tag_id"])).iloc[0]["name"])
     print(menus.MENU_SPLIT)
-    border_tag = int(input("Digite o número da border tag que deseja remover ou 0 para sair\n")) - 1
+    border_tag = int(input("Digite o número da border tag que deseja remover ou 0 para sair\n"))
+    if border_tag == 0:
+        menus.clear_console(1)
+        return None
+    border_tag -= 1
     while border_tag >= border_tag_list.shape[0]:
         border_tag = int(input("Número da border tag inválido, insira novamente ou 0 para sair\n"))
         if border_tag == 0:
@@ -191,7 +216,11 @@ def remove_card_tag():
     for x in range(card_tag_list.shape[0]):
         print(f"{x + 1} - ", "Card_Name: ", Records().show_card(str(card_tag_list.iloc[x]["card_id"])).iloc[0]["name"], "| Tag_Name: ", Records().show_tag(str(card_tag_list.iloc[x]["tag_id"])).iloc[0]["name"])
     print(menus.MENU_SPLIT)
-    card_tag = int(input("Digite o número da card tag que deseja remover ou 0 para sair\n")) - 1
+    card_tag = int(input("Digite o número da card tag que deseja remover ou 0 para sair\n"))
+    if card_tag == 0:
+        menus.clear_console(1)
+        return None
+    card_tag -= 1
     while card_tag >= card_tag_list.shape[0]:
         card_tag = int(input("Número da card tag inválido, insira novamente ou 0 para sair\n"))
         if card_tag == 0:
@@ -212,7 +241,11 @@ def remove_background_tag():
     for x in range(background_tag_list.shape[0]):
         print(f"{x + 1} - ", "Background_Name: ", Records().show_background(str(background_tag_list.iloc[x]["background_id"])).iloc[0]["name"], "| Tag_Name: ", Records().show_tag(str(background_tag_list.iloc[x]["tag_id"])).iloc[0]["name"])
     print(menus.MENU_SPLIT)
-    background_tag = int(input("Digite o número do background tag que deseja remover ou 0 para sair\n")) - 1
+    background_tag = int(input("Digite o número do background tag que deseja remover ou 0 para sair\n"))
+    if background_id == 0:
+        menus.clear_console(1)
+        return None
+    background_id -= 1
     while background_tag >= background_tag_list.shape[0]:
         background_tag = int(input("Número do background tag inválido, insira novamente ou 0 para sair\n"))
         if background_tag == 0:
@@ -233,7 +266,11 @@ def remove_user_card():
     for x in range(user_card_list.shape[0]):
         print(f"{x + 1} - ", "User_Name: ", Records().show_user(str(user_card_list.iloc[x]["user_id"])).iloc[0]["username"], "| Card_Name: ", Records().show_card(str(user_card_list.iloc[x]["card_id"])).iloc[0]["name"])
     print(menus.MENU_SPLIT)
-    user_card = int(input("Digite o número da user card que deseja remover ou 0 para sair\n")) - 1
+    user_card = int(input("Digite o número da user card que deseja remover ou 0 para sair\n"))
+    if user_card == 0:
+        menus.clear_console(1)
+        return None
+    user_card -= 1
     while user_card >= user_card_list.shape[0]:
         user_card = int(input("Número da user card inválido, insira novamente ou 0 para sair\n"))
         if user_card == 0:
