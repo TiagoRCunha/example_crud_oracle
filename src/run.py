@@ -126,17 +126,17 @@ def admin_access_create_records():
                 if selection == 1:
                         create_records.create_album()
                 elif selection == 2:
-                        create_records.create_rarity()
-                elif selection == 3:
                         create_records.create_user()
+                elif selection == 3:
+                        create_records.create_card()
                 elif selection == 4:
                         create_records.create_border()
                 elif selection == 5:
                         create_records.create_background()
                 elif selection == 6:
-                        create_records.create_card()
-                elif selection == 7:
                         create_records.create_tag()
+                elif selection == 7:
+                        create_records.create_rarity()
                 elif selection == 8:
                         config.clear_console(1)
                         create_records.create_border_tag()

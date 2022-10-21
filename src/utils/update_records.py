@@ -2,6 +2,9 @@ from typing import Optional
 from controller.controller_rarity import RarityController
 from controller.controller_background import BackgroundController
 from controller.controller_tag import TagController
+from controller.controller_album import AlbumController
+from controller.controller_border import BorderController
+from controller.controller_card import CardController
 import utils.config as config
 from utils.records import Records
 
@@ -47,14 +50,14 @@ def update_album(id):
             if new_title == "0":
                 config.clear_console(1)
                 return 0
-            #UPDATE TITULO ALBUM
+            AlbumController().update(id, new_title, None, 1)
             break
         elif selection == 2:
             new_description = input("Insira a nova descrição do album\n")
             if new_description == "0":
                 config.clear_console(1)
                 return 0
-            #UPDATE DESCRIÇÃO ALBUM
+            AlbumController().update(id, None, new_description, 2)
             break
         elif selection == 0:
             config.clear_console(1)
@@ -169,14 +172,14 @@ def update_card(id):
             if new_image == "0":
                 config.clear_console(1)
                 return 0
-            #UPDATE IMAGE CARD
+            CardController().update(id, new_image, None, 1)
             break
         elif selection == 2:
             new_name = input("Insira o novo nome da carta\n")
             if new_name == "0":
                 config.clear_console(1)
                 return 0
-            #UPDATE NAME CARD
+            CardController().update(id, None, new_name, 1)
             break
         elif selection == 0:
             config.clear_console(1)
@@ -225,14 +228,14 @@ def update_border(id):
             if new_image == "0":
                 config.clear_console(1)
                 return 0
-            #UPDATE IMAGE CARD
+            BorderController().update(id, None, new_image, 1)
             break
         elif selection == 2:
             new_name = input("Insira o novo nome da borda\n")
             if new_name == "0":
                 config.clear_console(1)
                 return 0
-            #UPDATE NAME CARD
+            BorderController().update(id, new_name, None, 2)
             break
         elif selection == 0:
             config.clear_console(1)

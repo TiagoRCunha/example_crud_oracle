@@ -191,6 +191,15 @@ MENU_ADMIN_DELETE_RECORDS = """
 =========== Deletar Registros ===========
 """
 
+MENU_CONFIRM_CASCATE = """
+=========== Confirmar Cascade ===========
+Existem outros registros que dependem desse
+Quer remover o registro e seus dependentes?
+[1] - Sim
+[2] - Não
+=========================================
+"""
+
 def login(username, password):
     oracle = OracleQueries()
     oracle.connect()

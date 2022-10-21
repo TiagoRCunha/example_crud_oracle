@@ -3,6 +3,10 @@ from controller.controller_background import BackgroundController
 from controller.controller_tag import TagController
 import utils.config as config
 from utils.records import Records
+from controller.controller_border import BorderController
+from controller.controller_album import AlbumController
+from controller.controller_card import CardController
+from controller.controller_card_tag import CardTagController
 
 def create_album():
     loop = True
@@ -29,7 +33,7 @@ def create_album():
         if description == "0":
             config.clear_console(1)
             return None
-        #CRIA ALBUM
+        AlbumController().insert(title, card_count, page_number, description)
         if menu_continue() == 2:
             return None
         config.clear_console(1)
@@ -100,7 +104,7 @@ def create_card():
         if album == 0:
             config.clear_console(1)
             return None
-        #CRIA CARTA
+        CardController().insert(number, image, name, background, border, rarity, album)
         if menu_continue() == 2:
             return None
         config.clear_console(1)
@@ -126,7 +130,7 @@ def create_border():
         if rarity == 0:
             config.clear_console(1)
             return None
-        #CRIA BORDA
+        BorderController().insert(name, image, rarity)
         if menu_continue() == 2:
             return None
         config.clear_console(1)
@@ -226,7 +230,7 @@ def create_card_tag():
         config.clear_console(1)
         tag = select_tag()
         config.clear_console(1)
-        #CRIA CARD TAG
+        CardTagController().insert(card, tag)
         if menu_continue() == 2:
             return None
         config.clear_console(1)

@@ -1,35 +1,35 @@
 from typing import Any, Dict, List, Optional, Tuple
 from conexion.oracle_queries import OracleQueries
-from model.border import Border
+from model.album import Album
 import utils.config as config
 import cx_Oracle
 
 
-class BorderController:
+class AlbumController:
     def __init__(self):
         pass
 
-    def insert(self, name: str, image: str, rarity_id: int) -> Border:
+    def insert(self, title: str, card_count: str, page_number: str, description: str) -> Album:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
-        oracle.write(*self._generate_insert_sql(name, rarity_id, image))
+        oracle.write(*self._generate_insert_sql(title, card_count, page_number, description))
 
     def update(
         self,
         id: int,
-        name: Optional[str],
-        image: Optional[str],
+        title: Optional[str],
+        description: Optional[str],
         change: int,
-    ) -> Border:
+    ) -> Album:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
-        oracle.write(*self._generate_update_sql(id, name, image, change))
+        oracle.write(*self._generate_update_sql(id, title, description, change))
 
     def delete(self, id: int):
         oracle = OracleQueries(can_write=True)
         oracle.connect()
         try:
-            oracle.write("DELETE FROM \"border\" WHERE id = :id", [id])
+            oracle.write("DELETE FROM \"album\" WHERE id = :id", [id])
         except cx_Oracle.IntegrityError:
             print(config.MENU_CONFIRM_CASCATE)
             selection = input("Digite sua opção\n")
@@ -40,18 +40,21 @@ class BorderController:
                 #Delete Cascade
 
     def _generate_insert_sql(
-        self, name: str, rarity_id: int, image: Optional[str]
+        self,  title: str, card_count: str, page_number: str, description: str
     ) -> Tuple[str, List[Any]]:
-        sql_insert = 'INSERT INTO "border" '
-        columns = ['"name"']
-        parameters: Dict[str, Any] = {":name": name}
+        sql_insert = 'INSERT INTO "album" '
+        columns = ["title"]
+        parameters: Dict[str, Any] = {":title": title}
 
-        if image is not None:
-            columns.append('"image"')
-            parameters[":image"] = image
+        
+        columns.append("card_count")
+        parameters[":card_count"] = card_count
 
-        columns.append("rarity_id")
-        parameters[":rarity_id"] = rarity_id
+        columns.append("page_number")
+        parameters[":page_number"] = page_number
+
+        columns.append('"description"')
+        parameters[":description"] = description
 
         sql_insert += f"({', '.join(columns)}) "
         sql_insert += f"VALUES ({', '.join(parameters.keys())})"
@@ -61,23 +64,23 @@ class BorderController:
     def _generate_update_sql(
         self,
         id: int,
-        name: Optional[str],
-        image: Optional[str],
+        title: Optional[str],
+        description: Optional[str],
         change: int,
     ) -> Tuple[str, List[Any]]:
-        sql_update = 'UPDATE "border" SET '
+        sql_update = 'UPDATE "album" SET '
         set_list = []
         parameters = []
 
         if change == 1:
-            if image is not None:
-                set_list.append('"image" = :image')
-                parameters.append(image)
+            if title is not None:
+                set_list.append('title = :title')
+                parameters.append(title)
 
         if change == 2:
-            if name is not None:
-                set_list.append('"name" = :name')
-                parameters.append(name)
+            if description is not None:
+                set_list.append('"description" = :description')
+                parameters.append(description)
 
         sql_update += ", ".join(set_list) + " "
         sql_update += "WHERE id = :id"

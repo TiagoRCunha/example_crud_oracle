@@ -2,6 +2,7 @@ from controller.controller_rarity import RarityController
 from controller.controller_tag import TagController
 import utils.config as config
 from utils.records import Records
+from controller.controller_border import BorderController
 
 def remove_album():
     loop = True
@@ -104,7 +105,7 @@ def remove_border():
             id_verification = Records().show_border(id)
         if not id_verification.empty:
             if menu_confirm() == 1:
-                #REMOVER BORDA
+                BorderController().delete(id)
                 config.clear_console(1)
                 if menu_continue() == 2:
                     return None
