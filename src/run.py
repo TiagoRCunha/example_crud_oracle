@@ -89,25 +89,31 @@ def admin_access_change_records():
                 print(config.MENU_ADMIN_CHANGE_RECORDS)
                 print("As tabelas disponiveis para modificação são:\n")
                 table_list = config.search_tables()
+                aux_list = []
                 for x in range(table_list.shape[0]):
+                        aux_list.append({ "id": (x + 1), "name": table_list.iloc[x]["table_name"] })
                         print(f"{x + 1} - " + table_list.iloc[x]["table_name"])
                 print(config.MENU_SPLIT)
                 selection = int(input("Digite o nome da tabela que deseja modificar, insira 0 para sair\n"))
                 config.clear_console(1)
-                if selection == 1:
+                aux_name = None
+                for x in range(len(aux_list)):
+                        if aux_list[x]["id"] == selection:
+                                aux_name = aux_list[x]["name"]
+                if aux_name == "album":
                         update_records.select_album_update()
-                elif selection == 2:
-                        update_records.select_rarity_update()
-                elif selection == 3:
+                elif aux_name == "user":
                         update_records.select_user_update()
-                elif selection == 4:
-                        update_records.select_border_update()
-                elif selection == 5:
-                        update_records.select_background_update()
-                elif selection == 6:
+                elif aux_name == "card":
                         update_records.select_card_update()
-                elif selection == 7:
+                elif aux_name == "border":
+                        update_records.select_border_update()
+                elif aux_name == "background":
+                        update_records.select_background_update()
+                elif aux_name == "tag":
                         update_records.select_tag_update()
+                elif aux_name == "rarity":
+                        update_records.select_rarity_update()
                 elif selection == 0:
                         loop = False
                         config.clear_console(1)
@@ -118,35 +124,41 @@ def admin_access_create_records():
                 print(config.MENU_ADMIN_CREATE_RECORDS)
                 print("As tabelas disponiveis para inserção de valores são:\n")
                 table_list = config.search_tables()
+                aux_list = []
                 for x in range(table_list.shape[0]):
+                        aux_list.append({ "id": (x + 1), "name": table_list.iloc[x]["table_name"] })
                         print(f"{x + 1} - " + table_list.iloc[x]["table_name"])
                 print(config.MENU_SPLIT)
                 selection = int(input("Digite o nome da tabela que deseja inserir um valor, insira 0 para sair\n"))
                 config.clear_console(1)
-                if selection == 1:
+                aux_name = None
+                for x in range(len(aux_list)):
+                        if aux_list[x]["id"] == selection:
+                                aux_name = aux_list[x]["name"]
+                if aux_name == "album":
                         create_records.create_album()
-                elif selection == 2:
+                elif aux_name == "user":
                         create_records.create_user()
-                elif selection == 3:
+                elif aux_name == "card":
                         create_records.create_card()
-                elif selection == 4:
+                elif aux_name == "border":
                         create_records.create_border()
-                elif selection == 5:
+                elif aux_name == "background":
                         create_records.create_background()
-                elif selection == 6:
+                elif aux_name == "tag":
                         create_records.create_tag()
-                elif selection == 7:
+                elif aux_name == "rarity":
                         create_records.create_rarity()
-                elif selection == 8:
+                elif aux_name == "border_tag":
                         config.clear_console(1)
                         create_records.create_border_tag()
-                elif selection == 9:
+                elif aux_name == "card_tag":
                         config.clear_console(1)
                         create_records.create_card_tag()
-                elif selection == 10:
+                elif aux_name == "background_tag":
                         config.clear_console(1)
                         create_records.create_background_tag()
-                elif selection == 11:
+                elif aux_name == "user_card":
                         config.clear_console(1)
                         create_records.create_user_card()
                 if selection == 0:
