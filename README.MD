@@ -4,7 +4,6 @@ Este projeto é um __fork__ [deste repositório](https://github.com/howardroatti
 
 Os integrantes são:
 - [Henrique Klayton](https://github.com/henrique-klayton)
-- [Pedro Nogueira F](https://github.com/PedroNogueiraF)
 - [Tiago R Cunha](https://github.com/TiagoRCunha)
 - [Victor Binda S](https://github.com/Victorbnd)
 
@@ -22,21 +21,16 @@ O sistema exige que as tabelas existam, então basta executar o script Python a 
 
 Para executar o sistema basta executar o script Python a seguir:
 ```shell
-~$ python principal.py
+~$ python run.py
 ```
 
-Para que possa testar as conexões com o banco de dados Oracle e o módulo Conexion desenvolvido para esse projeto, basta executar o script Python a seguir:
-```shell
-~$ python test.py
-```
 
 ## Organização
-- [diagrams](diagrams): Nesse diretório está o [diagrama relacional](diagrams/DIAGRAMA_RELACIONAL_PEDIDOS.pdf) (lógico) do sistema.
-    * O sistema possui cinco entidades: PRODUTOS, CLIENTES, FORNECEDORES, PEDIDOS e ITENS_PEDIDO
+- [diagrams](diagrams): Nesse diretório está o [diagrama relacional](diagrams/diagrama_er.pdf) (lógico) do sistema.
+    * O sistema possui onze entidades: album, user, card, border, background, tag, rarity, border_tag, card_tag, background_tag, user_card
 - [sql](sql): Nesse diretório estão os scripts para criação das tabelas e inserção de dados fictícios para testes do sistema
-    * [create_tables_pedidos.sql](sql/create_tables_pedidos.sql): script responsável pela criação das tabelas, relacionamentos e criação de permissão no esquema LabDatabase.
-    * [inserting_samples_records.sql](sql/inserting_samples_records.sql): script responsável pela inserção dos registros fictícios para testes do sistema.
-    * [inserting_samples_related_records.sql](sql/inserting_samples_related_records.sql): script responsável pela inserção dos registros fictícios de pedidos e itens de pedidos para testes do sistema utilizando blocos PL/SQL.
+    * [create_tables.sql](sql/create_tables.sql): script responsável pela criação das tabelas e relacionamentos.
+    * [insert_values.sql](sql/insert_values.sql): script responsável pela inserção dos registros fictícios para testes do sistema.
 - [src](src): Nesse diretório estão os scripts do sistema
     * [conexion](src/conexion): Nesse repositório encontra-se o [módulo de conexão com o banco de dados Oracle](src/conexion/oracle_queries.py). Esse módulo possui algumas funcionalidades úteis para execução de instruções DML e DDL, sendo possível obter JSON, Matriz e Pandas DataFrame.
       - Exemplo de utilização para consultas simples:
@@ -98,12 +92,13 @@ Para que possa testar as conexões com o banco de dados Oracle e o módulo Conex
                                   )
           ```
     * [controller](src/controller/): Nesse diretório encontram-sem as classes controladoras, responsáveis por realizar inserção, alteração e exclusão dos registros das tabelas.
-    * [model](src/model/): Nesse diretório encontram-ser as classes das entidades descritas no [diagrama relacional](diagrams/DIAGRAMA_RELACIONAL_PEDIDOS.pdf)
+    * [model](src/model/): Nesse diretório encontram-ser as classes das entidades descritas no [diagrama relacional](diagrams/album-der.pdf)
     * [reports](src/reports/) Nesse diretório encontra-se a [classe](src/reports/relatorios.py) responsável por gerar todos os relatórios do sistema
-    * [sql](src/sql/): Nesse diretório encontram-se os scripts utilizados para geração dos relatórios a partir da [classe relatorios](src/reports/relatorios.py)
-    * [utils](src/utils/): Nesse diretório encontram-se scripts de [configuração](src/utils/config.py) e automatização da [tela de informações iniciais](src/utils/splash_screen.py)
-    * [create_tables_and_records.py](src/create_tables_and_records.py): Script responsável por criar as tabelas e registros fictícios. Esse script deve ser executado antes do script [principal.py](src/principal.py) para gerar as tabelas, caso não execute os scripts diretamente no SQL Developer ou em alguma outra IDE de acesso ao Banco de Dados.
-    * [principal.py](src/principal.py): Script responsável por ser a interface entre o usuário e os módulos de acesso ao Banco de Dados. Deve ser executado após a criação das tabelas.
+    * [sql](src/sql/): Nesse diretório encontram-se os scripts utilizados para geração dos relatórios
+    * [utils](src/utils/): Nesse diretório encontram-se scripts de [configuração](src/utils/config.py) e automatização da tela de informações iniciais
+    * [create_tables_and_records.py](src/create_tables_and_records.py): Script responsável por criar as tabelas e registros fictícios. Esse script deve ser executado antes do script [run.py](src/run.py) para gerar as tabelas, caso não execute os scripts diretamente no SQL Developer ou em alguma outra IDE de acesso ao Banco de Dados.
+    * [run.py](src/run.py): Script responsável por ser a interface entre o usuário e os módulos de acesso ao Banco de Dados. Deve ser executado após a criação das tabelas.
+    * [populate_with_Oracle_queries]: Script que faz mais algumas inserções no banco, porém utilizando a biblioteca a fim de praticar.
 
 ### Bibliotecas Utilizadas
 - [requirements.txt](src/requirements.txt): `pip install -r requirements.txt`
@@ -131,6 +126,17 @@ Para que possa testar as conexões com o banco de dados Oracle e o módulo Conex
   export PATH
   ```
 
-## Contato
+## Contato do grupo
+Tiago R. Cunha
+- [LinkedIn](https://linkedin.com/in/tiago-rodrigues-cunha)
+- [E-Mail](mailto:tiago.r.c.sn@gmail.com)
+Henrique
+- [LinkedIn](https://linkedin.com/in/henrique-klayton)
+- [E-Mail](mailto:henrique70031@gmail.com)
+Victor
+- [LinkedIn](https://linkedin.com/in/victorbnd)
+- [E-Mail](mailto:victorbinda2017@gmail.com)
+
+## Contato do professor
 - [LinkedIn](https://linkedin.com/in/howardroatti)
 - [E-Mail](mailto:howardcruzroatti@gmail.com)
