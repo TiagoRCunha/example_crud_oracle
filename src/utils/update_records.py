@@ -1,3 +1,5 @@
+from typing import Optional
+from controller.controller_rarity import RarityController
 import utils.config as config
 from utils.records import Records
 
@@ -366,13 +368,13 @@ def select_rarity_update():
             if menu_continue() == 2:
                 return None
 
-#TODO
 def update_rarity(id):
-    show_rarity = Records().show_rarity(id)
+    controller = RarityController()
+    name: Optional[str] = None
+    tier: Optional[str] = None
 
     print("As informações da raridade disponíveis para alteração são:\n")
-    for x in range(show_rarity.shape[0]):
-        print(show_rarity.iloc[0])
+    print(controller.get_by_id(id).to_string())
     print("\n", config.MENU_ADMIN_CHANGE_RECORDS_RARITY_OPTIONS)
     selection = int(input("Digite sua opção\n"))
     loop = True
@@ -382,17 +384,17 @@ def update_rarity(id):
             if new_name == "0":
                 config.clear_console(1)
                 return 0
-            #UPDATE NAME RARITY
             break
         if selection == 2:
             new_tier = input("Insira o novo tier da raridade\n")
             if new_tier == "0":
                 config.clear_console(1)
+                new_tier = None
                 return 0
-            #UPDATE TIER RARITY
             break
         elif selection == 0:
             config.clear_console(1)
+            controller.update(id, name, tier)
             return 0
 
 def menu_continue():

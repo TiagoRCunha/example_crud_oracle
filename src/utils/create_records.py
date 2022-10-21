@@ -1,3 +1,4 @@
+from controller.controller_rarity import RarityController
 from controller.controller_tag import TagController
 import utils.config as config
 from utils.records import Records
@@ -174,6 +175,7 @@ def create_tag():
         config.clear_console(1)
 
 def create_rarity():
+    controller = RarityController()
     loop = True
     while loop:
         print(config.MENU_ADMIN_RARITY_AVAIBLES)
@@ -187,7 +189,7 @@ def create_rarity():
             config.clear_console(1)
             return None
         tier = Records().list_rarity().iloc[-1]["tier"]
-        #CRIA RARIDADE
+        controller.insert(name, tier)
         if menu_continue() == 2:
             return None
         config.clear_console(1)
