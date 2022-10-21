@@ -1,5 +1,6 @@
 from controller.controller_rarity import RarityController
 from controller.controller_tag import TagController
+from controller.controller_user import UserController
 import utils.config as config
 from utils.records import Records
 
@@ -35,6 +36,7 @@ def create_album():
 
 
 def create_user():
+    controller = UserController()
     loop = True
     while loop:
         print(config.MENU_ADMIN_USERS_AVAIBLES)
@@ -57,7 +59,7 @@ def create_user():
         if access_type == "":
             config.clear_console(1)
             return None
-        #CRIA USUÁRIO
+        controller.insert(username, password, access_type)
         if menu_continue() == 2:
             return None
         config.clear_console(1)

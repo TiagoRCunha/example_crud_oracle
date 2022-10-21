@@ -1,5 +1,6 @@
 from typing import Optional
 from controller.controller_rarity import RarityController
+from controller.controller_user import UserController
 import utils.config as config
 from utils.records import Records
 
@@ -86,42 +87,42 @@ def select_user_update():
                 return None
 
 
-#TODO
 def update_user(id):
+    controller = UserController()
     show_user = Records().show_user(id)
 
     print("As informações do usuário disponíveis para alteração são:\n")
-    for x in range(show_user.shape[0]):
-        print(show_user.iloc[0])
+    print(controller.get_by_id(id).to_string())
     print("\n", config.MENU_ADMIN_CHANGE_RECORDS_USER_OPTIONS)
     selection = int(input("Digite sua opção, ou aperte 'Enter' para sair\n"))
     loop = True
     while loop:
         if selection == 1:
             new_username = input("Insira o novo username para o usuário\n")
-            if new_username == "":
+            if new_username == "0":
+                new_username = None
                 config.clear_console(1)
                 return 0
-            #UPDATE USERNAME USER
             break
         elif selection == 2:
             new_password = input("Insira a nova senha do usuário\n")
-            if new_password == "":
+            if new_password == "0":
+                new_password = None
                 config.clear_console(1)
                 return 0
-            #UPDATE SENHA USER
             break
         elif selection == 3:
             new_access_type = input("Insira o novo tipo de acesso do usuário [0 = Normal, 1 = Admin]\n")
             while new_access_type != "0" and new_access_type != "1" and new_access_type != "":
                 new_access_type = input("Tipo de acesso inválido, insira novamente [0 = normal, 1 = admin]\n")
             if new_access_type == "":
+                new_access_type = "0"
                 config.clear_console(1)
                 return 0
-            #UPDATE TIPO DE ACESSO USER
             break
         elif selection == 0:
             config.clear_console(1)
+            controller.update()
             return 0
 
 def select_card_update():
@@ -370,8 +371,6 @@ def select_rarity_update():
 
 def update_rarity(id):
     controller = RarityController()
-    name: Optional[str] = None
-    tier: Optional[str] = None
 
     print("As informações da raridade disponíveis para alteração são:\n")
     print(controller.get_by_id(id).to_string())
@@ -382,19 +381,20 @@ def update_rarity(id):
         if selection == 1:
             new_name = input("Insira o novo nome da raridade\n")
             if new_name == "0":
+                new_name = None
                 config.clear_console(1)
                 return 0
             break
         if selection == 2:
             new_tier = input("Insira o novo tier da raridade\n")
             if new_tier == "0":
-                config.clear_console(1)
                 new_tier = None
+                config.clear_console(1)
                 return 0
             break
         elif selection == 0:
             config.clear_console(1)
-            controller.update(id, name, tier)
+            controller.update(id, new_name, new_tier)
             return 0
 
 def menu_continue():

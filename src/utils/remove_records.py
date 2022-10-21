@@ -1,4 +1,5 @@
 from controller.controller_rarity import RarityController
+from controller.controller_user import UserController
 import utils.config as config
 from utils.records import Records
 
@@ -50,7 +51,7 @@ def remove_user():
             id_verification = Records().show_user(id)
         if not id_verification.empty:
             if menu_confirm() == 1:
-                #REMOVER USUARIO
+                UserController().delete(id)
                 config.clear_console(1)
                 if menu_continue() == 2:
                     return None
