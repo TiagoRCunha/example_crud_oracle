@@ -7,6 +7,8 @@ Os integrantes são:
 - [Tiago R Cunha](https://github.com/TiagoRCunha)
 - [Victor Binda S](https://github.com/Victorbnd)
 
+[Vídeo de apresentação](https://youtu.be/n-WEyGMQEk8)
+
 
 # Album digital
 
