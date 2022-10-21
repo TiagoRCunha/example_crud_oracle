@@ -1,4 +1,5 @@
 from controller.controller_rarity import RarityController
+from controller.controller_tag import TagController
 import utils.config as config
 from utils.records import Records
 
@@ -155,7 +156,7 @@ def remove_tag():
             id_verification = Records().show_tag(id)
         if not id_verification.empty:
             if menu_confirm() == 1:
-                #REMOVER TAG
+                print(TagController().delete(id))
                 config.clear_console(1)
                 if menu_continue() == 2:
                     return None

@@ -71,6 +71,7 @@ MENU_ADMIN_CHANGE_RECORDS_BACKGROUND_OPTIONS= """
 ========= Alterações Permitidas ========
 [1] - Alterar Imagem
 [2] - Alterar Nome
+[3] - Alterar Raridade
 [0] - Sair
 ========================================
 """

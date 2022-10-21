@@ -1,4 +1,5 @@
 from model.rarity import Rarity
+from controller.controller_rarity import RarityController
 
 class Background:
     def __init__(self, 
@@ -18,7 +19,7 @@ class Background:
     def set_image(self, image:str):
         self.image = image
     
-    def set_rarity(self, rarity:Rarity):
+    def set_rarity(self, rarity: Rarity):
         self.rarity = rarity
     
     def get_id(self) -> int:
@@ -34,4 +35,7 @@ class Background:
         return self.rarity
 
     def to_string(self) -> str:
-        return f"Id: {self.get_id()} | Nome: {self.get_name()} | Imagem: {self.get_image()}\n| Raridade: {self.get_rarity().to_string()}"
+        if self.get_rarity():
+            return f"Id: {self.get_id()} | Nome: {self.get_name()} | Imagem: {self.get_image()}\n| Raridade: {self.get_rarity().to_string()}"
+        else:
+            return f"Id: {self.get_id()} | Nome: {self.get_name()} | Imagem: {self.get_image()}\n| Raridade: null"

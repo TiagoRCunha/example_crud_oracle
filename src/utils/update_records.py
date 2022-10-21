@@ -1,5 +1,7 @@
 from typing import Optional
 from controller.controller_rarity import RarityController
+from controller.controller_background import BackgroundController
+from controller.controller_tag import TagController
 import utils.config as config
 from utils.records import Records
 
@@ -238,9 +240,9 @@ def update_border(id):
 
 def select_background_update():
     print(config.MENU_ADMIN_BACKGROUND_AVAIBLES)
-    background_list = Records().list_background()
+    background_list = BackgroundController().list_table()
     for x in range(background_list.shape[0]):
-        print(f"{x + 1} - " + background_list.iloc[x]["name"])
+        print(str(background_list.id.values[x]) + " - " + str(background_list.name.values[x]))
     print(config.MENU_SPLIT)
     id = input("Digite o número do background que deseja alterar ou 0 para sair\n")
     loop = True
@@ -263,13 +265,11 @@ def select_background_update():
             if menu_continue() == 2:
                 return None
 
-#TODO
 def update_background(id):
-    show_background = Records().show_background(id)
+    show_background = BackgroundController().get_by_id(id).to_string()
 
     print("As informações do background disponíveis para alteração são:\n")
-    for x in range(show_background.shape[0]):
-        print(show_background.iloc[0])
+    print(show_background)
     print("\n", config.MENU_ADMIN_CHANGE_RECORDS_BACKGROUND_OPTIONS)
     selection = int(input("Digite sua opção\n"))
     loop = True
@@ -279,14 +279,22 @@ def update_background(id):
             if new_image == "0":
                 config.clear_console(1)
                 return 0
-            #UPDATE IMAGE BACKGROUND
+            BackgroundController().update(id, image=new_image)
             break
         elif selection == 2:
             new_name = input("Insira o novo nome do background\n")
             if new_name == "0":
                 config.clear_console(1)
                 return 0
-            #UPDATE NAME BACKGROUND
+            BackgroundController().update(id, name=new_name)
+            break
+        elif selection == 3:
+            RarityController().list_table()
+            new_rarity = input("Insira a nova raridade do background\n")
+            if new_rarity == "0":
+                config.clear_console(1)
+                return 0
+            BackgroundController().update(id, rarity_id=new_rarity)
             break
         elif selection == 0:
             config.clear_console(1)
@@ -319,13 +327,11 @@ def select_tag_update():
             if menu_continue() == 2:
                 return None
 
-#TODO
 def update_tag(id):
-    show_tag = Records().show_tag(id)
+    show_tag = TagController().get_by_id(id).to_string()
 
     print("As informações da tag disponíveis para alteração são:\n")
-    for x in range(show_tag.shape[0]):
-        print(show_tag.iloc[0])
+    print(show_tag)
     print("\n", config.MENU_ADMIN_CHANGE_RECORDS_TAG_OPTIONS)
     selection = int(input("Digite sua opção\n"))
     loop = True
@@ -335,7 +341,7 @@ def update_tag(id):
             if new_name == "0":
                 config.clear_console(1)
                 return 0
-            #UPDATE NAME TAG
+            print(TagController().update(id, new_name).to_string())
             break
         elif selection == 0:
             config.clear_console(1)
