@@ -24,10 +24,10 @@ class RarityController:
         return Rarity(
             df_rarity.id.values[0],
             df_rarity.name.values[0],
-            df_rarity.rarity.values[0],
+            df_rarity.tier.values[0],
         )
 
-    def insert(self, name: str, tier: int) -> Rarity:
+    def insert(self, name: str, tier: str) -> Rarity:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
@@ -40,11 +40,11 @@ class RarityController:
         return Rarity(
             df_rarity.id.values[0],
             df_rarity.name.values[0],
-            df_rarity.rarity.values[0],
+            df_rarity.tier.values[0],
         )
 
     def update(
-        self, rarity_id: int, name: Optional[str], tier: Optional[int]
+        self, rarity_id: int, name: Optional[str], tier: Optional[str]
     ) -> Rarity:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
@@ -56,7 +56,7 @@ class RarityController:
         return Rarity(
             df_rarity.id.values[0],
             df_rarity.name.values[0],
-            df_rarity.rarity.values[0],
+            df_rarity.tier.values[0],
         )
 
     def delete(self, rarity_id: int):
@@ -73,7 +73,7 @@ class RarityController:
         self,
         id: int,
         name: Optional[str],
-        tier: Optional[int],
+        tier: Optional[str],
     ) -> Tuple[str, List[Any]]:
         sql_update = 'UPDATE "rarity" SET '
         set_list = []
