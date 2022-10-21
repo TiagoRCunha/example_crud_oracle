@@ -1,4 +1,5 @@
 from controller.controller_rarity import RarityController
+from controller.controller_background import BackgroundController
 from controller.controller_tag import TagController
 import utils.config as config
 from utils.records import Records
@@ -151,7 +152,7 @@ def create_background():
         if rarity == 0:
             config.clear_console(1)
             return None
-        #CRIA BACKGROUND
+        BackgroundController().insert(name, image, rarity_id=rarity)
         if menu_continue() == 2:
             return None
         config.clear_console(1)
@@ -320,6 +321,7 @@ def select_rarity():
             return 0
         elif not rarity_verification.empty:
             config.clear_console(1)
+            print(rarity)
             return rarity
         while rarity_verification.empty:
             rarity = input("\nOpção inválida, digite novamente ou 0 para sair\n")
