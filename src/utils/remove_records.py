@@ -1,3 +1,4 @@
+from controller.controller_rarity import RarityController
 import utils.config as config
 from utils.records import Records
 
@@ -160,6 +161,7 @@ def remove_tag():
                     return None
 
 def remove_rarity():
+    controller = RarityController()
     loop = True
     while loop:
         print(config.MENU_ADMIN_RARITY_AVAIBLES)
@@ -180,7 +182,7 @@ def remove_rarity():
             id_verification = Records().show_rarity(id)
         if not id_verification.empty:
             if menu_confirm() == 1:
-                #REMOVE RARITY
+                controller.delete(id)
                 config.clear_console(1)
                 if menu_continue() == 2:
                     return None
